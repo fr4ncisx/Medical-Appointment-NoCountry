@@ -8,10 +8,10 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
 import { Option } from "@tipos/component";
 import { useUserStore } from "@store/user.store";
-import { DoctorData } from "@tipos/backendTypes";
+import { MedicoData } from "@tipos/backendTypes";
 
 interface MedicResponse {
-    medics: DoctorData[];
+    medics: MedicoData[];
 }
 
 const SelectorMedicos = ({ id, data, label, path, required, handleChange }: ControlProps) => {
