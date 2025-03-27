@@ -10,11 +10,7 @@ interface Props {
 
 export const SectionWrapper = ({ sideBarItems, children }: Props) => {
     return (
-        <Grid2 container sx={{
-            width: "100%",
-            minHeight: "calc(100vh - 80px)",
-            backgroundColor: "#f1f1f1"
-        }}>
+        <Grid2 container width="100%" minHeight="calc(100vh - 80px)" bgcolor="#f1f1f1">
             <SideBar links={sideBarItems} />
             <Grid2 size="grow" padding="2em">
                 {children}
