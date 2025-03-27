@@ -1,17 +1,5 @@
 import { UserRole } from "./store";
 
-export interface DoctorData {
-    id: number,
-    name: string,
-    lastname: string,
-    description: string,
-    state: string,
-    documentId: string,
-    gender: string,
-    speciality: string,
-    phone: string,
-}
-
 export enum Gender {
     MALE = "MALE",
     FEMALE = "FEMALE"
@@ -108,8 +96,12 @@ export enum Speciality {
     GINECOLOGIA = "GINECOLOGIA"
 }
 
-export interface MedicoResponse {
+export interface MedicosResponse {
     medics: MedicoData[]
+}
+
+export interface MedicoResponse {
+    medic: MedicoData;
 }
 
 export interface MedicoCreateResponse {
