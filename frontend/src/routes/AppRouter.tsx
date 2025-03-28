@@ -3,7 +3,6 @@ import { Welcome } from "@components/sections/Welcome/Welcome";
 import { MedicosDisponiblesSection } from "@components/sections/MedicosDisponibles/MedicosDisponiblesSection";
 import { AgendaTuCitaSection } from "@components/sections/Paciente/AgendaTuCita/AgendaTuCitaSection";
 import { NotFound } from "@components/layout/NotFound/NotFound";
-import { DoctorDetails } from "@components/sections/MedicosDisponibles/DoctorDetails/doctorDetails";
 import { DashboardPatient } from "@components/sections/Paciente/DashboardPatient/DashboardPatient";
 import { DashboardMedico } from "@components/sections/Medico/DashboardMedico/DashboardMedico";
 import { GestionarPacientes } from "@components/sections/Medico/GestionarPacientes/GestionarPacientes/GestionarPacientes";
@@ -16,6 +15,7 @@ import { DashboardAdmin } from "@components/sections/Admin/DashboardAdmin";
 import { ProtectedRoute } from "@routes/ProtectedRoute";
 import { UserRole } from "@tipos/store";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { MedicDetails } from "@components/sections/MedicosDisponibles/MedicDetails";
 
 export const AppRouter = () => {
     return (
@@ -25,7 +25,7 @@ export const AppRouter = () => {
                     <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<Welcome />} />
                     <Route path="/medicos-disponibles" element={<MedicosDisponiblesSection />} />
-                    <Route path="/medico/:id" element={<DoctorDetails />} />
+                    <Route path="/medico/:id" element={<MedicDetails />} />
                     <Route path="/agendar-cita" element={<AgendaTuCitaSection />} />
 
                     <Route element={<ProtectedRoute requiredRole={UserRole.PACIENTE} />}>
