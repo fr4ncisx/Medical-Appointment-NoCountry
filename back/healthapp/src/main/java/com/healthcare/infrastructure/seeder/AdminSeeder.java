@@ -1,4 +1,4 @@
-package com.healthcare.infrastructure.security.utils;
+package com.healthcare.infrastructure.seeder;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
