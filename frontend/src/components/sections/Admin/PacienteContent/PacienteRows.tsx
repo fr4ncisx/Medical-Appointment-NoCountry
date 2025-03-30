@@ -2,9 +2,20 @@ import { useTableContext } from "@context/table.context";
 import { IconButton, TableCell, TableRow, Tooltip } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { PacienteData } from "@tipos/backendTypes";
+import { useModalStore } from "@store/modal.store";
 
 export const PacienteRows = () => {
-    const { dataRows } = useTableContext();
+    const { dataRows, loadingTableRows } = useTableContext();
+    const setModalData = useModalStore(state => state.setModalData);
+    
+        const handleEliminarPaciente = (id: number) => {
+            setModalData({
+                showModal: true,
+                title: "",
+                operation: "delete_paciente",
+                data: { id }
+            });
+        }
     return (
         <>
             {
@@ -17,8 +28,8 @@ export const PacienteRows = () => {
                         <TableCell align="center">{address}</TableCell>
                         <TableCell align="center" sx={{ display: "flex", justifyContent: "space-around" }}>
                             <Tooltip title="Eliminar paciente">
-                                <IconButton color="error">
-                                    <DeleteIcon />
+                                <IconButton onClick={() => handleEliminarPaciente(id)} disabled={loadingTableRows}>
+                                    <DeleteIcon color="error" />
                                 </IconButton>
                             </Tooltip>
                         </TableCell>
