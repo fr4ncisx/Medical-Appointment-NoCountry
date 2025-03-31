@@ -1,10 +1,12 @@
-import { MedicCard } from "./MedicCard";
+import { MedicCard } from "../MedicCard";
 import { MedicoData } from "@tipos/backendTypes";
 import { CustomError } from "@tipos/types";
 import { useUserStore } from "@store/user.store";
 import { useState, useEffect } from "react";
 import { getMedicos } from "@services/medic/getMedicos";
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { GridLoading } from "./GridLoading";
+import { GridError } from "./GridError";
 
 export const MedicosGrid = () => {
     const [medicos, setMedicos] = useState<MedicoData[]>([]);
@@ -18,30 +20,14 @@ export const MedicosGrid = () => {
 
 
     if (loading) {
-        return (
-            <Box display="flex" alignItems="center" justifyContent="center" height="calc(100vh - 80px)">
-                <Typography color="primary" variant="h4">
-                    Cargando
-                </Typography>
-            </Box>
-        );
+        return <GridLoading />;
     }
 
     if (error) {
-        return (
-            <Box display="flex" alignItems="center" justifyContent="center" height="calc(100vh - 80px)">
-                <Typography color="error" variant="h4">
-                    {`Ocurrio un error: ${error.description}`}
-                </Typography>
-            </Box>
-        );
+        return <GridError description={error.description} />;
     }
     return (
-        <Box sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill,minmax(200px, 1fr))",
-            gap: "0.5rem"
-        }}>
+        <Box display="grid" gap=".5rem" gridTemplateColumns="repeat(auto-fill,minmax(200px, 1fr))">
             {
                 !error && !loading && (
                     medicos.map((doctor) => (

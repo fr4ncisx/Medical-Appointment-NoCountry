@@ -1,5 +1,5 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
-import { MedicosGrid } from "./MedicosGrid";
+import { MedicosGrid } from "./MedicosGrid/MedicosGrid";
 import { MedicosFilters } from "./MedicosFilters/MedicosFilters";
 
 export const MedicosDisponiblesSection = () => {
