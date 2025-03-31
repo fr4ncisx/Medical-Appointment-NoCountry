@@ -16,6 +16,7 @@ import { ProtectedRoute } from "@routes/ProtectedRoute";
 import { UserRole } from "@tipos/store";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { MedicDetails } from "@components/sections/MedicosDisponibles/MedicDetails";
+import { HistorialCitas } from "@components/sections/Medico/HistorialCitas/HistorialCitas";
 
 export const AppRouter = () => {
     return (
@@ -42,7 +43,7 @@ export const AppRouter = () => {
 
                     <Route element={<ProtectedRoute requiredRole={UserRole.MEDICO} />}>
                         <Route path="/medico/dashboard" element={<DashboardMedico />} />
-                        <Route path="/medico/historial-citas" element={<HistorialMedico />} />
+                        <Route path="/medico/historial-citas" element={<HistorialCitas />} />
                         <Route path="/medico/gestionar-pacientes" element={<GestionarPacientes />} />
                         <Route path="/medico/gestionar-medicamentos/:id" element={<GestionarMedicamentos />} />
                         <Route path="/medico/historial-medico/:id" element={<HistorialMedico />} />
