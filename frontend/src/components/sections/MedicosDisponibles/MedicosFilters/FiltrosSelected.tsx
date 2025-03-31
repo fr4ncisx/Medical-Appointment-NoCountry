@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { CustomInputLabel } from "./CustomInputLabel";
 import { Filtro } from "./Filtro";
 
@@ -15,8 +15,8 @@ export const FiltrosSelected = () => {
             </Box>
             <Box display="flex" flexWrap="wrap" gap=".5rem">
                 {
-                    filters.map(item => (
-                        <Filtro label={item} />
+                    filters.map((item,index) => (
+                        <Filtro key={index} label={item} />
                     ))
                 }
             </Box>
