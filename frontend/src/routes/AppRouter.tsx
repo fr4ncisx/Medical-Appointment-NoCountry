@@ -45,6 +45,7 @@ export const AppRouter = () => {
                         <Route path="/medico/historial-citas" element={<HistorialMedico />} />
                         <Route path="/medico/gestionar-pacientes" element={<GestionarPacientes />} />
                         <Route path="/medico/gestionar-medicamentos/:id" element={<GestionarMedicamentos />} />
+                        <Route path="/medico/historial-medico/:id" element={<HistorialMedico />} />
                         <Route path="/medico/agenda" element={<GestionarAgenda />} />
                     </Route>
                 </Route>

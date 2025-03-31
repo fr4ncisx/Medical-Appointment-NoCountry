@@ -14,6 +14,10 @@ export const GestionarPacientesRows = () => {
         navigate(`/medico/gestionar-medicamentos/${id}`);
     }
 
+    const handleChangeToMedicRecordsTable = (id: number) => {
+        navigate(`/medico/historial-medico/${id}`);
+    }
+
     return (
         <>
             {
@@ -26,7 +30,7 @@ export const GestionarPacientesRows = () => {
                         <TableCell align="center">{calculateAge(birthDate)}</TableCell>
                         <TableCell align="center" sx={{ display: "flex", justifyContent: "space-around" }}>
                             <Tooltip title="Historial Medico">
-                                <IconButton color="info">
+                                <IconButton color="info" onClick={() => handleChangeToMedicRecordsTable(id)}>
                                     <MonitorHeartIcon />
                                 </IconButton>
                             </Tooltip>
