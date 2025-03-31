@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.healthcare.domain.model.entity.User;
+import com.healthcare.domain.model.enums.Role;
 import com.healthcare.infrastructure.security.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -30,7 +31,9 @@ public class MedicalRecordsServiceServiceImpl implements IMedicalRecordsService 
 
     @Override
     public List<MedicalRecordsReponse> retrieveRecords(Long patientId, String token) {
-        validateTokenPatientId(token, patientId);
+        var userFromToken = getUser(token);
+        if(userFromToken.getRole().equals(Role.PACIENTE))
+            validateTokenPatientId(token, patientId);
         var listOfRecords = getPatient(patientId).getMedicalRecords();
         Assert.notEmpty(listOfRecords, "No se encontró ningún historial médico");
         return listOfRecords.stream()
@@ -52,11 +55,14 @@ public class MedicalRecordsServiceServiceImpl implements IMedicalRecordsService 
     }
 
     private void validateTokenPatientId(String token, Long patientId){
-        User loggedUser = jwtUtils.getUserDetails(token);
+        User loggedUser = getUser(token);
         boolean userIsPatient = loggedUser.getRole().toString().equals("PACIENTE");
         boolean userIdNotEquals = !loggedUser.getPatient().getId().equals(patientId);
         if (userIsPatient && userIdNotEquals) {
             throw new AuthorizationDeniedException("No está habilitado para ver historial medico de otro paciente");
         }
+    }
+    private User getUser(String token){
+        return jwtUtils.getUserDetails(token);
     }
 }
