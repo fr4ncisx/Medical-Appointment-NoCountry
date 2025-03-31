@@ -167,3 +167,18 @@ export interface Time {
     second: number;
     nano:   number;
 }
+
+export interface MedicalRecordData {
+    id:                number;
+    recordDate:        string;
+    visitReason:       string;
+    symptoms:          string;
+    symptomsFrequency: string;
+    medicalHistory:    string;
+    smokingHabits:     boolean;
+    activityHabits:    boolean;
+    additionalInfo:    string;
+    diagnosis:         string;
+    treatment:         string;
+    doctorNotes:       string;
+}
