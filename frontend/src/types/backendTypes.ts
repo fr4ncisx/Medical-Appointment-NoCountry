@@ -68,21 +68,21 @@ export interface CitasPasadasData {
 
 export interface MedicationInput {
     medicationName: string;
-    dosage:         string;
-    frequency:      string;
-    startDate:      Date;
-    endDate:        Date;
-    notes:          string;
+    dosage: string;
+    frequency: string;
+    startDate: Date;
+    endDate: Date;
+    notes: string;
 }
 
 export interface MedicacionData {
     id: number;
     medicationName: string;
-    dosage:         string;
-    frequency:      string;
-    startDate:      string;
-    endDate:        string;
-    notes:          string;
+    dosage: string;
+    frequency: string;
+    startDate: string;
+    endDate: string;
+    notes: string;
 }
 
 export enum Speciality {
@@ -162,23 +162,38 @@ export interface AgendarCitaInput {
 };
 
 export interface Time {
-    hour:   number;
+    hour: number;
     minute: number;
     second: number;
-    nano:   number;
+    nano: number;
 }
 
 export interface MedicalRecordData {
-    id:                number;
-    recordDate:        string;
-    visitReason:       string;
-    symptoms:          string;
+    id: number;
+    recordDate: string;
+    visitReason: string;
+    symptoms: string;
     symptomsFrequency: string;
-    medicalHistory:    string;
-    smokingHabits:     boolean;
-    activityHabits:    boolean;
-    additionalInfo:    string;
-    diagnosis:         string;
-    treatment:         string;
-    doctorNotes:       string;
+    medicalHistory: string;
+    smokingHabits: boolean;
+    activityHabits: boolean;
+    additionalInfo: string;
+    diagnosis: string;
+    treatment: string;
+    doctorNotes: string;
+}
+
+export interface ScheduleInput {
+    startDate: Date;
+    endDate: Date;
+    startTime: string;
+    endTime: string;
+}
+
+export interface ScheduleData {
+    id: number
+    startDate: string;
+    endDate: string;
+    startTime: string;
+    endTime: string;
 }
