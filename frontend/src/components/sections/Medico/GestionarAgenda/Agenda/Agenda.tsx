@@ -1,6 +1,6 @@
 import { Box, CircularProgress, List } from "@mui/material";
 import { useScheduleContext } from "@context/schedule.context";
-import { RetryConnectionButton } from "../RetryConnectionButton";
+import { AgendaError } from "../AgendaError";
 import { AgendaItem } from "./AgendaItem";
 
 export const Agenda = () => {
@@ -8,14 +8,14 @@ export const Agenda = () => {
 
     if (loadingSchedules) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="calc(100vh - 200px)">
+            <Box display="flex" justifyContent="center" alignItems="center" height="200px">
                 <CircularProgress color="primary" size="2rem" />
             </Box>
         );
     }
 
     if (errorSchedules) {
-        return <RetryConnectionButton error={errorSchedules} handleRetry={fetchSchedules} />;
+        return <AgendaError error={errorSchedules} handleRetry={fetchSchedules} />;
     }
 
     return (

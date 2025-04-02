@@ -8,18 +8,22 @@ interface Props {
     handleRetry: () => void;
 }
 
-export const RetryConnectionButton = ({ error, handleRetry }: Props) => {
+export const AgendaError = ({ error, handleRetry }: Props) => {
     if (!error) return null;
     return (
         <Box display="flex" alignItems="center" flexDirection="column">
             <Typography variant="h6" color="error" mb=".3rem">
                 {error.description}
             </Typography>
-            <CustomButton onClick={handleRetry} startIcon={<ReplayIcon />}>
-                <Typography textTransform="none">
-                    Reintentar conexión 
-                </Typography>
-            </CustomButton>
+            {
+                error.status === "unknow" && (
+                    <CustomButton onClick={handleRetry} startIcon={<ReplayIcon />}>
+                        <Typography textTransform="none">
+                            Reintentar conexión
+                        </Typography>
+                    </CustomButton>
+                )
+            }
         </Box>
     );
 }

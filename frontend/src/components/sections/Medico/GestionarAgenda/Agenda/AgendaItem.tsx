@@ -6,16 +6,28 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { ScheduleData } from "@tipos/backendTypes";
+import { useModalStore } from "@store/modal.store";
 
 interface Props {
     item: ScheduleData
 }
 
 export const AgendaItem = ({ item }: Props) => {
-    const { endDate, endTime, startDate, startTime } = item;
+    const { id, endDate, endTime, startDate, startTime } = item;
+    const setModalData = useModalStore(state => state.setModalData);
+
+    const handleEliminarSchedule = () => {
+        setModalData({
+            showModal: true,
+            title: "",
+            operation: "delete_schedule",
+            data: { id }
+        });
+    }
+
     return (
         <ListItem sx={{ backgroundColor: "#fff", mb: ".5rem" }}>
-            <Box display="flex" width="100%">
+            <Box display="flex" width="100%" alignItems="center">
                 <DateRangeIcon color="primary" />
                 <ListItemText primary={startDate} sx={{ color: "#726969" }} />
 
@@ -30,7 +42,7 @@ export const AgendaItem = ({ item }: Props) => {
             </Box>
             <Box display="flex">
                 <Tooltip title="Eliminar">
-                    <IconButton color="error" onClick={() => { }} >
+                    <IconButton color="error" onClick={handleEliminarSchedule} >
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
