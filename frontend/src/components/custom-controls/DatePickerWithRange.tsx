@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ControlProps } from '@jsonforms/core';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { format, parse } from "date-fns";
 
@@ -14,7 +14,7 @@ type ErrorData = {
     message: string
 }
 
-const DatePickerWithRange = ({ data, path, enabled, required, handleChange }: ControlProps) => {
+const DatePickerWithRange = ({ data, label, path, enabled, required, handleChange }: ControlProps) => {
     const startDate = data?.startDate ? parse(data.startDate, "dd/MM/yyyy", new Date()) : null;
     const endDate = data?.endDate ? parse(data.endDate, "dd/MM/yyyy", new Date()) : null;
 
@@ -65,34 +65,44 @@ const DatePickerWithRange = ({ data, path, enabled, required, handleChange }: Co
 
     return (
         <Box sx={{ display: "flex", gap: "1rem" }}>
-            <DatePicker
-                disabled={!enabled}
-                value={startDate}
-                name='startDate'
-                format='dd/MM/yyyy'
-                onChange={(value) => handleStartDateChange(value)}
-                slotProps={{
-                    textField: {
-                        variant: 'outlined',
-                        error: dateRangeError.isError && ["both", "start"].includes(dateRangeError.errorOn),
-                        helperText: dateRangeError.isError && ["both", "start"].includes(dateRangeError.errorOn) ? dateRangeError.message : "",
-                    },
-                }}
-            />
-            <DatePicker
-                disabled={!enabled}
-                value={endDate}
-                name='endDate'
-                format='dd/MM/yyyy'
-                onChange={(value) => handleEndDateChange(value)}
-                slotProps={{
-                    textField: {
-                        variant: 'outlined',
-                        error: dateRangeError.isError && ["both", "end"].includes(dateRangeError.errorOn),
-                        helperText: dateRangeError.isError && ["both", "end"].includes(dateRangeError.errorOn) ? dateRangeError.message : "",
-                    },
-                }}
-            />
+            <Box>
+                <Typography variant='body1' color='primary' lineHeight="1.3rem">
+                    {`${label} - Fecha Inicial`}
+                </Typography>
+                <DatePicker
+                    disabled={!enabled}
+                    value={startDate}
+                    name='startDate'
+                    format='dd/MM/yyyy'
+                    onChange={(value) => handleStartDateChange(value)}
+                    slotProps={{
+                        textField: {
+                            variant: 'outlined',
+                            error: dateRangeError.isError && ["both", "start"].includes(dateRangeError.errorOn),
+                            helperText: dateRangeError.isError && ["both", "start"].includes(dateRangeError.errorOn) ? dateRangeError.message : "",
+                        },
+                    }}
+                />
+            </Box>
+            <Box>
+                <Typography variant='body1' color='primary' lineHeight="1.3rem">
+                    {`${label} - Fecha Final`}
+                </Typography>
+                <DatePicker
+                    disabled={!enabled}
+                    value={endDate}
+                    name='endDate'
+                    format='dd/MM/yyyy'
+                    onChange={(value) => handleEndDateChange(value)}
+                    slotProps={{
+                        textField: {
+                            variant: 'outlined',
+                            error: dateRangeError.isError && ["both", "end"].includes(dateRangeError.errorOn),
+                            helperText: dateRangeError.isError && ["both", "end"].includes(dateRangeError.errorOn) ? dateRangeError.message : "",
+                        },
+                    }}
+                />
+            </Box>
         </Box>
     );
 }
