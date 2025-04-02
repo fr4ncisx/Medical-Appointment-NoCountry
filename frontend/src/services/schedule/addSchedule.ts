@@ -1,4 +1,4 @@
-import { AgendaFormData } from "@components/sections/Medico/GestionarAgenda/AgendaForm/agendaFormSchema"
+import { AgendaFormData } from "@components/sections/Medico/GestionarAgenda/AgendaModalContent/agendaFormSchema"
 import { ScheduleInput } from "@tipos/backendTypes"
 import { CustomError } from "@tipos/types"
 import { formatDate } from "@utils/date/formatDate"
