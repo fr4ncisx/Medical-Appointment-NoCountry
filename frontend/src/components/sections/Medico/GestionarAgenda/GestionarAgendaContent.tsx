@@ -4,7 +4,7 @@ import CustomModal from "@ui/CustomModal/CustomModal";
 import { Toaster } from "sonner";
 import { AgendaAddButton } from "./AgendaAddButton";
 import { ScheduleContextProvider } from "@context/schedule.provider";
-import { AgendaModalContent } from "./AgendaForm/AgendaModalContent";
+import { AgendaModalContent } from "./AgendaModalContent/AgendaModalContent";
 
 export const GestionarAgendaContent = () => {
     const showModal = useModalStore((state) => state.modalData.showModal);
