@@ -13,7 +13,7 @@ interface Props {
     onChange: ({ data, errors }: { data: any, errors: any }) => void;
 }
 
-const ajv = new Ajv({allErrors: true});
+const ajv = new Ajv({allErrors: true, strict: false,});
 addErrors(ajv);
 addFormats(ajv);
 
