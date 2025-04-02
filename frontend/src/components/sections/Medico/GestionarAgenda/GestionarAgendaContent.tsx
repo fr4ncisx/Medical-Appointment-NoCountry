@@ -1,5 +1,5 @@
 import { useModalStore } from "@store/modal.store";
-import { Agenda } from "./Agenda";
+import { Agenda } from "./Agenda/Agenda";
 import { AgendaForm } from "./AgendaForm/AgendaForm";
 import CustomModal from "@ui/CustomModal/CustomModal";
 import { Toaster } from "sonner";
