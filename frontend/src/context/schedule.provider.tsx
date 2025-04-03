@@ -21,6 +21,17 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
         getSchedules({ medicoId, token, setSchedules, setLoading: setLoadingSchedules, setError: setErrorSchedules });
     }, []);
 
+    const removeItem = (idAEliminar: number) => {
+        setSchedules(prevData => {
+            const newData = [...prevData];
+            const index = newData.findIndex(item => item.id === idAEliminar);
+            if (index !== -1) {
+                newData.splice(index, 1);
+            }
+            return newData;
+        });
+    };
+
     useEffect(() => {
         fetchSchedules();
     }, []);
@@ -29,7 +40,8 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
         schedules,
         loadingSchedules,
         errorSchedules,
-        fetchSchedules
+        fetchSchedules,
+        removeItem
     }
 
     return <ScheduleContext value={initValues}>{children}</ScheduleContext>
