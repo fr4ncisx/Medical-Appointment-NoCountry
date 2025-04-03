@@ -21,6 +21,11 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
         getSchedules({ medicoId, token, setSchedules, setLoading: setLoadingSchedules, setError: setErrorSchedules });
     }, []);
 
+    const addItem = (newItem: ScheduleData) => {
+        setErrorSchedules(previuosState => null);
+        setSchedules([...schedules, newItem]);
+    }
+
     const removeItem = (idAEliminar: number) => {
         setSchedules(prevData => {
             const newData = [...prevData];
@@ -41,7 +46,8 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
         loadingSchedules,
         errorSchedules,
         fetchSchedules,
-        removeItem
+        removeItem,
+        addItem
     }
 
     return <ScheduleContext value={initValues}>{children}</ScheduleContext>
