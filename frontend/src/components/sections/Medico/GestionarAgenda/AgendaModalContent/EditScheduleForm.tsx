@@ -17,7 +17,7 @@ export const EditScheduleForm = () => {
     const [dataForm, setDataForm] = useState<AgendaFormData>(initialData);
     const [error, setError] = useState<CustomError>(null);
     const [loading, setLoading] = useState(false);
-    const { fetchSchedules } = useScheduleContext();
+    const { addEditedItem } = useScheduleContext();
     const token = useUserStore((state) => state.getToken)();
     const closeModal = useModalStore(state => state.closeModal);
     
@@ -39,11 +39,11 @@ export const EditScheduleForm = () => {
         const response = await editSchedule({ scheduleId: itemData.id.toString(), token, data: dataForm, setError });
         if (response) {
             showSonnerToast({
-                title: response.status,
+                title: "Edicion del horario",
                 description: "Se edito correctamente el horario",
                 type: "success"
             });
-            fetchSchedules();
+            addEditedItem(response);
             closeModal();
         }
         setLoading(false);

@@ -1,5 +1,5 @@
 import { AgendaFormData } from "@components/sections/Medico/GestionarAgenda/AgendaModalContent/agendaFormSchema"
-import { ScheduleInput } from "@tipos/backendTypes"
+import { ScheduleData, ScheduleInput } from "@tipos/backendTypes"
 import { CustomError } from "@tipos/types"
 import { formatDate } from "@utils/date/formatDate"
 import { handleError } from "@utils/handleError"
@@ -41,7 +41,7 @@ export const editSchedule = ({ scheduleId, data, token, setError }: Params) => {
             }
             return responseBody;
         })
-        .then((response) => response)
+        .then((response: ScheduleData) => response)
         .catch((e) => {
             const error = handleError(e);
             setError(error);

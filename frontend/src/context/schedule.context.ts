@@ -8,7 +8,8 @@ const initValue: ScheduleContextType = {
     errorSchedules: null,
     fetchSchedules: () => {},
     removeItem: () => {},
-    addItem: () => {}
+    addItem: () => {},
+    addEditedItem: () => {}
 }
 
 export interface ScheduleContextType {
@@ -18,6 +19,7 @@ export interface ScheduleContextType {
     fetchSchedules: () => void
     removeItem: (idAEliminar: number) => void
     addItem: (newItem: ScheduleData) => void
+    addEditedItem: (editedItem: ScheduleData) => void
 }
 
 export const ScheduleContext = createContext<ScheduleContextType>(initValue);
