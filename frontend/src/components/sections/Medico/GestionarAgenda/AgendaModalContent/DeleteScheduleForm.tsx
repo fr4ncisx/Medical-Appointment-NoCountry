@@ -13,7 +13,7 @@ export const DeleteScheduleMenu = () => {
     const { id: scheduleId } = useModalStore(state => state.modalData.data);
     const closeModal = useModalStore(state => state.closeModal);
     const token = useUserStore(state => state.getToken)();
-    const { fetchSchedules } = useScheduleContext();
+    const { removeItem } = useScheduleContext();
 
     const handleClick = async () => {
         setLoading(true);
@@ -26,7 +26,7 @@ export const DeleteScheduleMenu = () => {
                 description: "Se elimino correctamente el horario",
                 type: "success"
             });
-            fetchSchedules();
+            removeItem(scheduleId);
             closeModal();
         }
         setLoading(false)
