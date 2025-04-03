@@ -25,6 +25,15 @@ export const AgendaItem = ({ item }: Props) => {
         });
     }
 
+    const handleEditSchedule = () => {
+        setModalData({
+            showModal: true,
+            title: "Editar Horario",
+            operation: "edit_schedule",
+            data: { itemData: item }
+        });
+    }
+
     return (
         <ListItem sx={{ backgroundColor: "#fff", mb: ".5rem" }}>
             <Box display="flex" width="100%" alignItems="center">
@@ -47,7 +56,7 @@ export const AgendaItem = ({ item }: Props) => {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Editar">
-                    <IconButton color="info" onClick={() => { }}>
+                    <IconButton color="info" onClick={handleEditSchedule}>
                         <EditIcon />
                     </IconButton>
                 </Tooltip>

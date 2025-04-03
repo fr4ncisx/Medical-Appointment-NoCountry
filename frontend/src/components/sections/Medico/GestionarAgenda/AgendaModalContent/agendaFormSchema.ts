@@ -4,8 +4,8 @@ export interface AgendaFormData {
         endDate: string,
     },
     time: {
-        startTime: string,
-        endTime: string,
+        startTime: Date,
+        endTime: Date,
     }
 }
 
@@ -32,10 +32,10 @@ export const agendaFormSchema = {
             "type": "object",
             "properties": {
                 "startTime": {
-                    "type": "string",
+                    "type": "object",
                 },
                 "endTime": {
-                    "type": "string",
+                    "type": "object",
                 }
             }
         }

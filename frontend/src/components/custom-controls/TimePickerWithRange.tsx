@@ -50,13 +50,12 @@ const TimePickerWithRange = ({ data, label, path, enabled, required, handleChang
     const dateRangeError: ErrorData = handleErrorMsg();
 
     const handleStartTimeChange = (value: any) => {
-        handleChange(`${path}.startTime`, value.toString());
+        handleChange(`${path}.startTime`, value);
     }
 
     const handleEndTimeChange = (value: any) => {
-        handleChange(`${path}.endTime`, value.toString());
+        handleChange(`${path}.endTime`, value);
     }
-
     return (
         <Box sx={{ display: "flex", gap: "1rem" }}>
             <Box>
