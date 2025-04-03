@@ -38,7 +38,7 @@ export const MedicamentosForm = () => {
         if (response) {
             showSonnerToast({
                 title: "Medicamento añadido",
-                description: "Se a asigno un nuevo medicamento al paciente",
+                description: "Se asigno correctamente el medicamento al paciente",
                 type: "success"
             });
             const newMedicamentoData: MedicacionData = { ...response }
