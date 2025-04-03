@@ -50,7 +50,7 @@ export const EditMedicamentosForm = () => {
         if (response) {
             showSonnerToast({
                 title: response.status,
-                description: "Se a asigno un nuevo medicamento al paciente",
+                description: "Se edito correctamenta la medicación",
                 type: "success"
             });
             refetchRows();
