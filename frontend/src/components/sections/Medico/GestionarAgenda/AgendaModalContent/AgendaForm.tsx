@@ -17,7 +17,7 @@ export const AgendaForm = () => {
     const closeModal = useModalStore(state => state.closeModal);
     const token = useUserStore((state) => state.getToken)();
     const medicoId = useUserStore(state => state.getUserId)();
-    const { fetchSchedules } = useScheduleContext();
+    const { addItem } = useScheduleContext();
 
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setDataForm(data);
@@ -41,7 +41,7 @@ export const AgendaForm = () => {
                 description: "Se añadio el horario correctamente",
                 type: "success"
             });
-            fetchSchedules();
+            addItem(response);
             closeModal();
         }
         setLoading(false);
