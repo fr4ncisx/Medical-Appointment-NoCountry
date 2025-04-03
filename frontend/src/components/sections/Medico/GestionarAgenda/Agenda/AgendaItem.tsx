@@ -35,7 +35,7 @@ export const AgendaItem = ({ item }: Props) => {
     }
 
     return (
-        <ListItem sx={{ backgroundColor: "#fff", mb: ".5rem" }}>
+        <ListItem sx={{ backgroundColor: "#ffffff95", mb: ".5rem", borderRadius: "5px" }}>
             <Box display="flex" width="100%" alignItems="center">
                 <DateRangeIcon color="primary" />
                 <ListItemText primary={startDate} sx={{ color: "#726969" }} />
