@@ -3,15 +3,17 @@ import { ModalOperation } from "@tipos/store";
 import { ReactNode } from "react";
 import { AgendaForm } from "./AgendaForm";
 import { DeleteScheduleMenu } from "./DeleteScheduleForm";
+import { EditScheduleForm } from "./EditScheduleForm";
 
-type AgendaModalContent = Extract<ModalOperation, "create_schedule" | "delete_schedule">;
+type AgendaModalContent = Extract<ModalOperation, "create_schedule" | "delete_schedule" |  "edit_schedule">;
 
 export const AgendaModalContent = () => {
     const operation = useModalStore(state => state.modalData).operation;
 
     const CONTENT_MAP: Record<AgendaModalContent, ReactNode> = {
         "create_schedule": <AgendaForm />,
-        "delete_schedule": <DeleteScheduleMenu />
+        "delete_schedule": <DeleteScheduleMenu />,
+        "edit_schedule": <EditScheduleForm />
     }
 
     return (
