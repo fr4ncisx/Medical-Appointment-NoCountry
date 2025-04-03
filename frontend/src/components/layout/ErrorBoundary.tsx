@@ -20,7 +20,7 @@ class ErrorBoundary extends Component<Props> {
     }
 
     componentDidCatch(error: Error, info: ErrorInfo) {
-        console.log({ error, info })
+        console.error({ error, info })
     }
 
     render() {

@@ -44,7 +44,7 @@ export const handleError = (error: any): CustomError => {
             }
         }
         return {
-            description: "Se introdujo un campo invalido",
+            description: errorMsg.replace("400: ", ""),
             type: "fetch",
             status: "400"
         }
