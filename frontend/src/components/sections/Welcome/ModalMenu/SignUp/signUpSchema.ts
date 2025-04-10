@@ -1,8 +1,8 @@
 export interface SignUpFormData {
     email: string
     repeatPassword: {
-        password: string
-        repeatPassword: 1234
+        password: string,
+        repeatPassword: string
     },
     first_name: string
     last_name: string
