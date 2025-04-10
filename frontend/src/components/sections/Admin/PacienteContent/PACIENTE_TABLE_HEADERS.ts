@@ -15,6 +15,7 @@ export const pacientes_headers: HeaderSchema[] = [
     },
     {
         id: "4",
-        title: "",
+        title: "actions",
+        width: "180px"
     }
 ];
