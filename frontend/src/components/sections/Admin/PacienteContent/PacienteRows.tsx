@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { PacienteData } from "@tipos/backendTypes";
 import { useModalStore } from "@store/modal.store";
 import EditIcon from '@mui/icons-material/Edit';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export const PacienteRows = () => {
     const { dataRows, loadingTableRows } = useTableContext();
@@ -23,6 +24,15 @@ export const PacienteRows = () => {
             showModal: true,
             title: "",
             operation: "edit_paciente",
+            data: { itemData }
+        });
+    }
+
+    const handleShowDetails = (itemData: PacienteData) => {
+        setModalData({
+            showModal: true,
+            title: "",
+            operation: "paciente_details",
             data: { itemData }
         });
     }
@@ -47,6 +57,11 @@ export const PacienteRows = () => {
                                 <Tooltip title="Editar">
                                     <IconButton color="info" onClick={() => handleEditarPaciente(paciente)}>
                                         <EditIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Detalles">
+                                    <IconButton color="warning" onClick={() => handleShowDetails(paciente)}>
+                                        <ListAltIcon />
                                     </IconButton>
                                 </Tooltip>
                             </TableCell>
