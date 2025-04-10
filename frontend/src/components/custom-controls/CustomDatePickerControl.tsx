@@ -11,13 +11,14 @@ const CustomDatePickerControl = ({ data, path, uischema, label, handleChange }: 
     const rawValue = data ? data[key] : null;
     const value = rawValue ? parse(rawValue, "dd/MM/yyyy", new Date()) : null;
     const maxDate = validateAge ? getMinDateForPicker() : null;
-    
+    const errorOnAge = validateAge && maxDate && value && value > maxDate;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     const onChange = (value: any, context: PickerChangeHandlerContext<DateValidationError>) => {
         const date = new Date(value);
         const correctDate = format(date, "dd/MM/yyyy");
         handleChange(`${path}.${key}`, correctDate);
     };
+
     return (
         <DatePicker
             sx={{ width: "100%" }}
@@ -28,7 +29,8 @@ const CustomDatePickerControl = ({ data, path, uischema, label, handleChange }: 
             maxDate={maxDate}
             slotProps={{
                 textField: {
-                    helperText: validateAge ? 'Debe ser mayor de 18 años' : "" 
+                    error: errorOnAge || undefined,
+                    helperText: validateAge && errorOnAge ? 'Debe ser mayor de 18 años' : "" 
                 },
             }}
         />
