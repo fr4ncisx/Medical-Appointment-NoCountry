@@ -13,6 +13,7 @@ import com.healthcare.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,7 +64,7 @@ public class JwtUtils {
                 .build()
                 .verify(token);
     }
-    
+
     public DecodedJWT validateUserToken(String token) {
         try {
             return verifyToken(token);
@@ -80,7 +81,7 @@ public class JwtUtils {
         }
     }
 
-    public User getUserDetails(String token){
+    public User getUserDetails(String token) {
         var decodedJWT = validateUserToken(token);
         String userEmail = decodedJWT.getSubject();
         return userRepository.findByEmail(userEmail)
@@ -96,16 +97,40 @@ public class JwtUtils {
         securityContext.setAuthentication(auth);
     }
 
-    private Long getId(String email, Role role){
+    /**
+     * Global usage for patient validation
+     * only if id doesnt match with current patient and call id patient
+     *
+     * @param token        jwt token without bearer
+     * @param patientId    id of the patient
+     * @param errorMessage error message if it's not authorized
+     */
+    public void validateTokenPatientId(String token, Long patientId, String errorMessage) {
+        User loggedUser = getUser(token);
+        if (loggedUser.getRole().equals(Role.PACIENTE)) {
+            boolean userIsPatient = loggedUser.getRole().toString().equals("PACIENTE");
+            boolean userIdNotEquals = !loggedUser.getPatient().getId().equals(patientId);
+            if (userIsPatient && userIdNotEquals) {
+                throw new AuthorizationDeniedException(errorMessage);
+            }
+        }
+    }
+
+    private User getUser(String token) {
+        return getUserDetails(token);
+    }
+
+    private Long getId(String email, Role role) {
         var u = userRepository.findByEmail(email).orElseThrow(() -> new InvalidDataException("Usuario no encontrado, getId"));
         return switch (role) {
-            case Role.MEDICO ->  u.getMedic().getId();
-            case Role.PACIENTE ->  u.getPatient().getId();
+            case Role.MEDICO -> u.getMedic().getId();
+            case Role.PACIENTE -> u.getPatient().getId();
             case Role.ADMIN -> u.getAdmin().getId();
         };
     }
-    private String claimIdRole(Role role){
-        return switch (role){
+
+    private String claimIdRole(Role role) {
+        return switch (role) {
             case Role.MEDICO -> "medicId";
             case Role.PACIENTE -> "patientId";
             case Role.ADMIN -> "adminId";
