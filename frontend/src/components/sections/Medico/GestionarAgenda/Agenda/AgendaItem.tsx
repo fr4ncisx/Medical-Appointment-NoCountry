@@ -7,6 +7,7 @@ import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import { ScheduleData } from "@tipos/backendTypes";
 import { useModalStore } from "@store/modal.store";
+import { formatDate } from "@utils/date/formatDate";
 
 interface Props {
     item: ScheduleData
@@ -38,10 +39,10 @@ export const AgendaItem = ({ item }: Props) => {
         <ListItem sx={{ backgroundColor: "#ffffff95", mb: ".5rem", borderRadius: "5px" }}>
             <Box display="flex" width="100%" alignItems="center">
                 <DateRangeIcon color="primary" />
-                <ListItemText primary={startDate} sx={{ color: "#726969" }} />
+                <ListItemText primary={formatDate(startDate, "yyyy-MM-dd", "dd/MM/yyyy")} sx={{ color: "#726969" }} />
 
                 <CalendarMonthIcon color="primary" />
-                <ListItemText primary={endDate} sx={{ color: "#726969" }} />
+                <ListItemText primary={formatDate(endDate, "yyyy-MM-dd", "dd/MM/yyyy")} sx={{ color: "#726969" }} />
 
                 <HistoryToggleOffIcon color="primary" />
                 <ListItemText primary={startTime} sx={{ color: "#726969" }} />
