@@ -23,17 +23,18 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
 
     const addEditedItem = (editedItem: ScheduleData) => {
         removeItem(editedItem.id);
-        addItem(editedItem);
-    }
-
-    const addItem = (newItem: ScheduleData) => {
         const newSchedules = schedules.map((schedule) => {
-            if(schedule.id === newItem.id){
-                return newItem;
+            if (schedule.id === editedItem.id) {
+                return editedItem;
             }
             return schedule;
         });
         setSchedules(newSchedules);
+    }
+
+    const addItem = (newItem: ScheduleData) => {
+        setErrorSchedules(prevState => null);
+        setSchedules([...schedules, newItem]);
     }
 
     const removeItem = (idAEliminar: number) => {
