@@ -13,7 +13,8 @@ export type ModalOperation =
     "medical_record_details" |
     "create_schedule" | 
     "delete_schedule" |
-    "edit_schedule";
+    "edit_schedule" |
+    "edit_paciente";
 
 export interface ModalData {
     title: string,
