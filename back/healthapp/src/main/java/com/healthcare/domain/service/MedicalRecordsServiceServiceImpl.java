@@ -25,7 +25,7 @@ public class MedicalRecordsServiceServiceImpl implements IMedicalRecordsService 
     private final PatientRepository patientRepository;
 
     @Override
-    public List<MedicalRecordsReponse> retrieveRecords(Long patientId, String token) {
+    public List<MedicalRecordsReponse> retrieveRecords(Long patientId) {
         var listOfRecords = getPatient(patientId).getMedicalRecords();
         Assert.notEmpty(listOfRecords, "No se encontró ningún historial médico");
         return listOfRecords.stream()

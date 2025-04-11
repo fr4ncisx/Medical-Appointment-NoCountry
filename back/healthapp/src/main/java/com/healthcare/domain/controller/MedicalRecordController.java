@@ -3,7 +3,6 @@ package com.healthcare.domain.controller;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,9 +29,8 @@ public class MedicalRecordController {
 
     @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityService.isSamePatientId(#patientId)")
     @GetMapping("/{patientId}")
-    public ResponseEntity<List<MedicalRecordsReponse>> getMedicalRecords(@PathVariable Long patientId, HttpServletRequest request){
-        String token = request.getHeader("Authorization").replace("Bearer ", "");
-        return new ResponseEntity<>(medicalRecordsService.retrieveRecords(patientId, token), HttpStatus.OK);
+    public ResponseEntity<List<MedicalRecordsReponse>> getMedicalRecords(@PathVariable Long patientId){
+        return new ResponseEntity<>(medicalRecordsService.retrieveRecords(patientId), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN','MEDICO'})")

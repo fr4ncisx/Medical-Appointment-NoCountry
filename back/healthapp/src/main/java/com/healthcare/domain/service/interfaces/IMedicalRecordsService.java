@@ -5,6 +5,6 @@ import com.healthcare.domain.dto.request.MedicalRecordsRequest;
 import com.healthcare.domain.dto.response.MedicalRecordsReponse;
 
 public interface IMedicalRecordsService {
-    public List<MedicalRecordsReponse> retrieveRecords(Long patientId, String token);
-    public void createMedicalRecord(Long patientId, MedicalRecordsRequest request);
+    List<MedicalRecordsReponse> retrieveRecords(Long patientId);
+    void createMedicalRecord(Long patientId, MedicalRecordsRequest request);
 }
