@@ -13,7 +13,6 @@ import com.healthcare.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -95,29 +94,6 @@ public class JwtUtils {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         securityContext.setAuthentication(auth);
-    }
-
-    /**
-     * Global usage for patient validation
-     * only if id doesnt match with current patient and call id patient
-     *
-     * @param token        jwt token without bearer
-     * @param patientId    id of the patient
-     * @param errorMessage error message if it's not authorized
-     */
-    public void validateTokenPatientId(String token, Long patientId, String errorMessage) {
-        User loggedUser = getUser(token);
-        if (loggedUser.getRole().equals(Role.PACIENTE)) {
-            boolean userIsPatient = loggedUser.getRole().toString().equals("PACIENTE");
-            boolean userIdNotEquals = !loggedUser.getPatient().getId().equals(patientId);
-            if (userIsPatient && userIdNotEquals) {
-                throw new AuthorizationDeniedException(errorMessage);
-            }
-        }
-    }
-
-    private User getUser(String token) {
-        return getUserDetails(token);
     }
 
     private Long getId(String email, Role role) {
