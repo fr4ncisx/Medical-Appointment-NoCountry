@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component("securityService")
-public class SecurityService {
+@Component("securityOwnership")
+public class SecurityOwnership {
 
     private final UserRepository userRepository;
 

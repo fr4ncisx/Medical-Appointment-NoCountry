@@ -27,7 +27,7 @@ public class MedicalRecordController {
 
     private final IMedicalRecordsService medicalRecordsService;
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityService.isSamePatientId(#patientId)")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityOwnership.isSamePatientId(#patientId)")
     @GetMapping("/{patientId}")
     public ResponseEntity<List<MedicalRecordsReponse>> getMedicalRecords(@PathVariable Long patientId){
         return new ResponseEntity<>(medicalRecordsService.retrieveRecords(patientId), HttpStatus.OK);
