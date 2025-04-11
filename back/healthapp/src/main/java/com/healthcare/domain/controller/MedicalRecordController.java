@@ -28,7 +28,7 @@ public class MedicalRecordController {
 
     private final IMedicalRecordsService medicalRecordsService;
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityService.isSamePatientId(#patientId)")
     @GetMapping("/{patientId}")
     public ResponseEntity<List<MedicalRecordsReponse>> getMedicalRecords(@PathVariable Long patientId, HttpServletRequest request){
         String token = request.getHeader("Authorization").replace("Bearer ", "");
