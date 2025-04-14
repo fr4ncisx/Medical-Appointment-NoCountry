@@ -38,13 +38,6 @@ export const pacienteEditFormSchema = {
                 }
             }
         },
-        "dni": {
-            "type": "string",
-            "pattern": "^[0-9]{8}$",
-            "errorMessage": {
-                "pattern": "El DNI debe tener 8 dígitos y debe ser escrito sin puntos"
-            }
-        },
         "customDatePicker": {
             "type": "object",
             "properties": {

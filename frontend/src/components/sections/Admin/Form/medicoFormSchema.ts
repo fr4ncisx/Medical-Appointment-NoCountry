@@ -10,7 +10,7 @@ export interface MedicoFormData {
     speciality: string
     dni: string
     phone: string
-    status: string
+    state: string
     description: string
 }
 
@@ -25,7 +25,7 @@ export const medicoFormSchema = {
         "speciality",
         "dni",
         "phone",
-        "status",
+        "state",
         "description"
     ],
     "properties": {
@@ -117,8 +117,9 @@ export const medicoFormSchema = {
                 "pattern": 'El formato acepta solamente números y el signo +'
             }
         },
-        "status": {
-            "type": "string"
+        "state": {
+            "type": "object",
+            "customRender": "CustomSelectControl",
         },
         "description": {
             "type": "string"
@@ -213,8 +214,37 @@ export const medicoFormUiSchema = {
                                 },
                                 {
                                     "type": "Control",
-                                    "scope": "#/properties/status",
-                                    "label": "Estado",
+                                    "scope": "#/properties/state",
+                                    "label": "Provincia",
+                                    "options": {
+                                        "key": "state",
+                                        "items": [
+                                            { value: 'BUENOS_AIRES', label: 'Buenos Aires' },
+                                            { value: 'CATAMARCA', label: 'Catamarca' },
+                                            { value: 'CHACO', label: 'Chaco' },
+                                            { value: 'CHUBUT', label: 'Chubut' },
+                                            { value: 'CORDOBA', label: 'Córdoba' },
+                                            { value: 'CORRIENTES', label: 'Corrientes' },
+                                            { value: 'ENTRE_RIOS', label: 'Entre Ríos' },
+                                            { value: 'FORMOSA', label: 'Formosa' },
+                                            { value: 'JUJUY', label: 'Jujuy' },
+                                            { value: 'LA_PAMPA', label: 'La Pampa' },
+                                            { value: 'LA_RIOJA', label: 'La Rioja' },
+                                            { value: 'MENDOZA', label: 'Mendoza' },
+                                            { value: 'MISIONES', label: 'Misiones' },
+                                            { value: 'NEUQUEN', label: 'Neuquén' },
+                                            { value: 'RIO_NEGRO', label: 'Río Negro' },
+                                            { value: 'SALTA', label: 'Salta' },
+                                            { value: 'SAN_JUAN', label: 'San Juan' },
+                                            { value: 'SAN_LUIS', label: 'San Luis' },
+                                            { value: 'SANTA_CRUZ', label: 'Santa Cruz' },
+                                            { value: 'SANTA_FE', label: 'Santa Fe' },
+                                            { value: 'SANTIAGO_DEL_ESTERO', label: 'Santiago del Estero' },
+                                            { value: 'TIERRA_DEL_FUEGO', label: 'Tierra del Fuego' },
+                                            { value: 'TUCUMAN', label: 'Tucumán' },
+                                            { value: 'CIUDAD_AUTONOMA_BUENOS_AIRES', label: 'Ciudad Autónoma de Buenos Aires' }
+                                        ]
+                                    }
                                 }
                             ]
                         },

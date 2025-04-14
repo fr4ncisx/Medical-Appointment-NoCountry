@@ -1,4 +1,4 @@
-import { Box, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Typography } from "@mui/material";
+import { Box, FormControl, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { Option } from "@tipos/component";
 import { useState } from "react";
 import { CustomInputLabel } from "./CustomInputLabel";

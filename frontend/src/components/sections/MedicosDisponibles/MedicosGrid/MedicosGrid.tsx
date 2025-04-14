@@ -4,7 +4,7 @@ import { CustomError } from "@tipos/types";
 import { useUserStore } from "@store/user.store";
 import { useState, useEffect } from "react";
 import { getMedicos } from "@services/medic/getMedicos";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { GridLoading } from "./GridLoading";
 import { GridError } from "./GridError";
 

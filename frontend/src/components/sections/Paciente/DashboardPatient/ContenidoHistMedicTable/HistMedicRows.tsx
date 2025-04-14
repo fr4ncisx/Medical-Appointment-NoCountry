@@ -1,4 +1,4 @@
-import { Button, TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 import { CitasPasadasData } from "@tipos/backendTypes";
 
 export const HistMedicRows = ({citasPasadas}: {citasPasadas: CitasPasadasData[]}) => {

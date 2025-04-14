@@ -1,4 +1,5 @@
 import { PacienteEditFormData } from "@components/sections/Admin/Form/EditPacienteMenu/pacienteEditFormSchema";
+import { Gender, PacienteEditInput } from "@tipos/backendTypes";
 import { CustomError } from "@tipos/types"
 import { formatDate } from "@utils/date/formatDate";
 import { handleError } from "@utils/handleError";
@@ -14,11 +15,11 @@ interface Params {
 export const editPaciente = async ({ patientId, token, data, setError }: Params) => {
     const PACIENTE_EDIT_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/patient/${patientId}`;
     const birthDateFormated = data?.customDatePicker.date && formatDate(data?.customDatePicker.date, "dd/MM/yyyy", "yyyy-MM-dd");
-    const pacienteInput = {
+    const pacienteInput: PacienteEditInput = {
         firstName: data?.first_name || "",
         lastName: data?.last_name || "",
-        birthDate: birthDateFormated,
-        gender: data?.customSelect.gender || "",
+        birthDate: birthDateFormated || "",
+        gender: data?.customSelect.gender as Gender,
         phone: data?.phone || "",
         address: data?.address || "",
         emergencyContactInfo: data?.emergency_contact_info || "",
