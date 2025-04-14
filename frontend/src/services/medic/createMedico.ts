@@ -22,7 +22,7 @@ export const createMedico = async ({ token, data, setError }: Params) => {
         name: data?.first_name || "",
         phone: data?.phone || "",
         speciality,
-        state: data?.state as Provincia,
+        state: data?.state.state as Provincia,
         user: {
             email: data?.email || "",
             password: data?.repeatPassword.password || ""
