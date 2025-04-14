@@ -20,7 +20,7 @@ export const CitasRows = ({citas}: {citas: CitasData[]}) => {
         
     }
 
-    const handleReprogramar = (id: number) => {
+    const handleReprogramar = (_id: number) => {
         // TODO eliminar paciente
     }
     return (

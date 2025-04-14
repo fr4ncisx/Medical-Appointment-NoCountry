@@ -17,7 +17,7 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
     const token = useUserStore(state => state.getToken)();
 
     const fetchSchedules = useCallback(() => {
-        setErrorSchedules(prevState => null);
+        setErrorSchedules(_prevState => null);
         getSchedules({ medicoId, token, setSchedules, setLoading: setLoadingSchedules, setError: setErrorSchedules });
     }, []);
 
@@ -33,7 +33,7 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
     }
 
     const addItem = (newItem: ScheduleData) => {
-        setErrorSchedules(prevState => null);
+        setErrorSchedules(_prevState => null);
         setSchedules([...schedules, newItem]);
     }
 

@@ -63,9 +63,8 @@ export const EditPacienteMenu = () => {
 
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setData(data);
-        console.log(errors);
         if (errors.length !== 0) {
-            setError({ type: "input", description: "entrada invalida en formulario de inicio de sesion" })
+            setError({ type: "input", description: "entrada invalida en formulario" })
         } else {
             setError(null);
         }
@@ -91,6 +90,6 @@ export const EditPacienteMenu = () => {
                 </Box>
                 <SubmitButton label="Editar Paciente" error={error} loading={loading} handleOnClick={handleEditPaciente} />
             </Box>
-        </form >
+        </form>
     );
 }

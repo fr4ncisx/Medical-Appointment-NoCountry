@@ -46,7 +46,7 @@ export const MedicDetails = () => {
     if (!medico) {
         return <>No se pudo recuperar el medico</>;
     }
-    const { description, speciality, lastname, name, phone, state } = medico;
+    const { description, speciality, lastname, name } = medico;
     const fullname = `${name} ${lastname}`;
 
     return (

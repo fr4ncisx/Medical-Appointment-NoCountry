@@ -12,8 +12,8 @@ const CustomDatePickerControl = ({ data, path, uischema, label, handleChange }: 
     const value = rawValue ? parse(rawValue, "dd/MM/yyyy", new Date()) : null;
     const maxDate = validateAge ? getMinDateForPicker() : null;
     const errorOnAge = validateAge && maxDate && value && value > maxDate;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-    const onChange = (value: any, context: PickerChangeHandlerContext<DateValidationError>) => {
+
+    const onChange = (value: any, _context: PickerChangeHandlerContext<DateValidationError>) => {
         const date = new Date(value);
         const correctDate = format(date, "dd/MM/yyyy");
         handleChange(`${path}.${key}`, correctDate);
