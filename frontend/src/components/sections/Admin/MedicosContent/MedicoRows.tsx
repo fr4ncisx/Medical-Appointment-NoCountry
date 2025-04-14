@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, TableCell, TableRow, Tooltip, Typography } from "@mui/material";
 import { useModalStore } from "@store/modal.store";
 import { MedicoData } from "@tipos/backendTypes";
+import EditIcon from '@mui/icons-material/Edit';
 
 export const MedicoRows = () => {
     const { dataRows, loadingTableRows } = useTableContext();
@@ -16,29 +17,47 @@ export const MedicoRows = () => {
             data: { id }
         });
     }
+
+    const handleEditarMedico = (itemData: MedicoData) => {
+        setModalData({
+            showModal: true,
+            title: "",
+            operation: "edit_medico",
+            data: { itemData }
+        });
+    }
+
     return (
         <>
             {
-                dataRows.map(({ id, documentId, name, lastname, speciality }: MedicoData) => (
-                    <TableRow
-                        key={id}
-                    >
-                        <TableCell align="center">{documentId}</TableCell>
-                        <TableCell align="center">{`${name} ${lastname}`}</TableCell>
-                        <TableCell align="center">
-                            <Typography variant="body2">
-                                {speciality.toLowerCase()}
-                            </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                            <Tooltip title="Eliminar medico">
-                                <IconButton onClick={() => handleEliminarMedico(id)} disabled={loadingTableRows}>
-                                    <DeleteIcon color="error" />
-                                </IconButton>
-                            </Tooltip>
-                        </TableCell>
-                    </TableRow>
-                ))
+                dataRows.map((medico: MedicoData) => {
+                    const { id, documentId, name, lastname, speciality } = medico;
+                    return (
+                        <TableRow
+                            key={id}
+                        >
+                            <TableCell align="center">{documentId}</TableCell>
+                            <TableCell align="center">{`${name} ${lastname}`}</TableCell>
+                            <TableCell align="center">
+                                <Typography variant="body2">
+                                    {speciality.toLowerCase()}
+                                </Typography>
+                            </TableCell>
+                            <TableCell align="center">
+                                <Tooltip title="Eliminar medico">
+                                    <IconButton onClick={() => handleEliminarMedico(id)} disabled={loadingTableRows}>
+                                        <DeleteIcon color="error" />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Editar">
+                                    <IconButton color="info" onClick={() => handleEditarMedico(medico)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </TableCell>
+                        </TableRow>
+                    );
+                })
             }
         </>
     );

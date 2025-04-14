@@ -33,6 +33,16 @@ export interface PacienteInput {
     user: UserInput;
 }
 
+export interface PacienteEditInput {
+    firstName:            string;
+    lastName:             string;
+    birthDate:            string;
+    gender:               Gender;
+    phone:                string;
+    address:              string;
+    emergencyContactInfo: string;
+}
+
 export interface UserInput {
     email: string;
     password: string;
@@ -111,7 +121,7 @@ export interface MedicoCreateResponse {
         name: string,
         lastname: string,
         description: string,
-        state: string,
+        state: Provincia,
         documentId: string,
         gender: Gender,
         speciality: Speciality,
@@ -140,12 +150,22 @@ export interface MedicoInput {
     name: string,
     lastname: string,
     description: string,
-    state: string,
+    state: Provincia,
     documentId: string,
     gender: Gender,
     speciality: Speciality,
     phone: string,
     user: UserInput
+}
+
+export interface MedicoEditInput {
+    name:        string;
+    lastname:    string;
+    description: string;
+    state:       Provincia;
+    gender:      Gender;
+    speciality:  Speciality;
+    phone:       string;
 }
 
 export interface AppointmentResponse {
@@ -197,3 +217,31 @@ export interface ScheduleData {
     startTime: string;
     endTime: string;
 }
+
+export enum Provincia {
+    BUENOS_AIRES = 'Buenos Aires',
+    CATAMARCA = 'Catamarca',
+    CHACO = 'Chaco',
+    CHUBUT = 'Chubut',
+    CORDOBA = 'Córdoba',
+    CORRIENTES = 'Corrientes',
+    ENTRE_RIOS = 'Entre Ríos',
+    FORMOSA = 'Formosa',
+    JUJUY = 'Jujuy',
+    LA_PAMPA = 'La Pampa',
+    LA_RIOJA = 'La Rioja',
+    MENDOZA = 'Mendoza',
+    MISIONES = 'Misiones',
+    NEUQUEN = 'Neuquén',
+    RIO_NEGRO = 'Río Negro',
+    SALTA = 'Salta',
+    SAN_JUAN = 'San Juan',
+    SAN_LUIS = 'San Luis',
+    SANTA_CRUZ = 'Santa Cruz',
+    SANTA_FE = 'Santa Fe',
+    SANTIAGO_DEL_ESTERO = 'Santiago del Estero',
+    TIERRA_DEL_FUEGO = 'Tierra del Fuego',
+    TUCUMAN = 'Tucumán',
+    CIUDAD_AUTONOMA_BUENOS_AIRES = 'Ciudad Autónoma de Buenos Aires'
+  }
+  
