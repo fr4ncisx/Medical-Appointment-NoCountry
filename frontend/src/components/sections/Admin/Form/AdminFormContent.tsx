@@ -1,14 +1,21 @@
 import { useModalStore } from "@store/modal.store";
 import { ModalOperation } from "@tipos/store";
 import { ReactNode } from "react";
-import { FormularioCreacionMedico } from "./FormularioCreacionMedico";
-import { DeleteMedicoMenu } from "./DeleteMedicoMenu";
-import { DeletePacienteMenu } from "./DeletePacienteMenu";
-import { EditPacienteMenu } from "./EditPacienteMenu/EditPacienteMenu";
-import { PacienteDetails } from "./EditPacienteMenu/PacienteDetails";
-import { EditMedicoMenu } from "./EditMedicoMenu/EditMedicoMenu";
+import { DeleteMedicoMenu } from "./Medico/DeleteMedicoMenu";
+import { DeletePacienteMenu } from "./Paciente/DeletePacienteMenu";
+import { EditPacienteMenu } from "./Paciente/EditPacienteMenu/EditPacienteMenu";
+import { PacienteDetails } from "./Paciente/EditPacienteMenu/PacienteDetails";
+import { EditMedicoMenu } from "./Medico/EditMedicoMenu/EditMedicoMenu";
+import { FormularioCreacionMedico } from "./Medico/FormularioCreacionMedico/FormularioCreacionMedico";
 
-type AdminModalContent = Extract<ModalOperation, "create_medico" | "delete_medico" | "delete_paciente" | "edit_paciente" | "paciente_details" | "edit_medico">
+type AdminModalContent = Extract<ModalOperation,
+    "create_medico" |
+    "delete_medico" |
+    "delete_paciente" |
+    "edit_paciente" |
+    "paciente_details" |
+    "edit_medico" |
+    "medico_details">
 
 export const AdminFormContent = () => {
     const operation = useModalStore(state => state.modalData).operation;
@@ -19,7 +26,8 @@ export const AdminFormContent = () => {
         "delete_paciente": <DeletePacienteMenu />,
         "edit_paciente": <EditPacienteMenu />,
         "paciente_details": <PacienteDetails />,
-        "edit_medico": <EditMedicoMenu />
+        "edit_medico": <EditMedicoMenu />,
+        "medico_details": <></>
     }
 
     return (

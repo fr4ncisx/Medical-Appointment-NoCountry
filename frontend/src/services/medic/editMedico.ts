@@ -1,4 +1,4 @@
-import { MedicoEditFormData } from "@components/sections/Admin/Form/EditMedicoMenu/medicoEditFormSchema";
+import { MedicoEditFormData } from "@components/sections/Admin/Form/Medico/EditMedicoMenu/medicoEditFormSchema";
 import { Gender, MedicoEditInput, Provincia, Speciality } from "@tipos/backendTypes";
 import { CustomError } from "@tipos/types";
 import { handleError } from "@utils/handleError";

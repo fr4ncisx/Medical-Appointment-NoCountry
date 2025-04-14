@@ -1,4 +1,4 @@
-import { PacienteEditFormData } from "@components/sections/Admin/Form/EditPacienteMenu/pacienteEditFormSchema";
+import { PacienteEditFormData } from "@components/sections/Admin/Form/Paciente/EditPacienteMenu/pacienteEditFormSchema";
 import { Gender, PacienteEditInput } from "@tipos/backendTypes";
 import { CustomError } from "@tipos/types"
 import { formatDate } from "@utils/date/formatDate";
