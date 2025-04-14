@@ -16,7 +16,7 @@ export const EditMedicoMenu = () => {
     const initData: MedicoEditFormData = {
         description: medicoData.description,
         gender: medicoData.gender,
-        speciality: medicoData.gender,
+        speciality: medicoData.speciality,
         state: medicoData.state,
         first_name: medicoData.name,
         last_name: medicoData.lastname,
