@@ -10,7 +10,9 @@ export interface MedicoFormData {
     speciality: string
     dni: string
     phone: string
-    state: string
+    state: {
+        state: string
+    }
     description: string
 }
 
