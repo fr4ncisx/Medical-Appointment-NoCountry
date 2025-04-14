@@ -4,6 +4,7 @@ import { IconButton, TableCell, TableRow, Tooltip, Typography } from "@mui/mater
 import { useModalStore } from "@store/modal.store";
 import { MedicoData } from "@tipos/backendTypes";
 import EditIcon from '@mui/icons-material/Edit';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 export const MedicoRows = () => {
     const { dataRows, loadingTableRows } = useTableContext();
@@ -23,6 +24,15 @@ export const MedicoRows = () => {
             showModal: true,
             title: "",
             operation: "edit_medico",
+            data: { itemData }
+        });
+    }
+
+    const handleShowDetails = (itemData: MedicoData) => {
+        setModalData({
+            showModal: true,
+            title: "",
+            operation: "medico_details",
             data: { itemData }
         });
     }
@@ -52,6 +62,11 @@ export const MedicoRows = () => {
                                 <Tooltip title="Editar">
                                     <IconButton color="info" onClick={() => handleEditarMedico(medico)}>
                                         <EditIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Detalles">
+                                    <IconButton color="warning" onClick={() => handleShowDetails(medico)}>
+                                        <ListAltIcon />
                                     </IconButton>
                                 </Tooltip>
                             </TableCell>

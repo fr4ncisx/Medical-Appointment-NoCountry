@@ -7,6 +7,7 @@ import { EditPacienteMenu } from "./Paciente/EditPacienteMenu/EditPacienteMenu";
 import { PacienteDetails } from "./Paciente/EditPacienteMenu/PacienteDetails";
 import { EditMedicoMenu } from "./Medico/EditMedicoMenu/EditMedicoMenu";
 import { FormularioCreacionMedico } from "./Medico/FormularioCreacionMedico/FormularioCreacionMedico";
+import { MedicoRowDetails } from "./Medico/MedicoRowDetails";
 
 type AdminModalContent = Extract<ModalOperation,
     "create_medico" |
@@ -27,7 +28,7 @@ export const AdminFormContent = () => {
         "edit_paciente": <EditPacienteMenu />,
         "paciente_details": <PacienteDetails />,
         "edit_medico": <EditMedicoMenu />,
-        "medico_details": <></>
+        "medico_details": <MedicoRowDetails />
     }
 
     return (
