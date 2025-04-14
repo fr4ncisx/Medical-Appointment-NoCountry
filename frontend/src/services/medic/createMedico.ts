@@ -1,4 +1,4 @@
-import { MedicoFormData } from "@components/sections/Admin/Form/medicoFormSchema"
+import { MedicoFormData } from "@components/sections/Admin/Form/Medico/FormularioCreacionMedico/medicoFormSchema"
 import { Gender, MedicoCreateResponse, MedicoInput, Provincia, Speciality } from "@tipos/backendTypes"
 import { CustomError } from "@tipos/types"
 import { handleError } from "@utils/handleError"
