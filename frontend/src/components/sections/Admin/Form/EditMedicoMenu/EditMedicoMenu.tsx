@@ -58,7 +58,6 @@ export const EditMedicoMenu = () => {
 
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setData(data);
-        console.log(errors);
         if (errors.length !== 0) {
             setError({ type: "input", description: "entrada invalida en formulario" })
         } else {
