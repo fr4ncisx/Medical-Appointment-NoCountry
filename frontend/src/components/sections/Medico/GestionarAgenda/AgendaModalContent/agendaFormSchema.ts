@@ -1,5 +1,5 @@
 export interface AgendaFormData {
-    datePickerWithRange: {
+    dateRange: {
         startDate: string,
         endDate: string,
     },
@@ -12,12 +12,13 @@ export interface AgendaFormData {
 export const agendaFormSchema = {
     "type": 'object',
     "required": [
-        "datePickerWithRange",
+        "dateRange",
         "time"
     ],
     "properties": {
-        "datePickerWithRange": {
+        "dateRange": {
             "type": "object",
+            "customRender": "DatePickerWithRange",
             "properties": {
                 "startDate": {
                     "type": "string",
@@ -50,11 +51,8 @@ export const agendaFormUiSchema = {
     "elements": [
         {
             "type": "Control",
-            "scope": "#/properties/datePickerWithRange",
+            "scope": "#/properties/dateRange",
             "label": "Dias Laborales",
-            "options": {
-                "customControl": "datePickerWithRange",
-            }
         },
         {
             "type": "Control",

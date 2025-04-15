@@ -2,7 +2,20 @@ import { and, rankWith, schemaMatches, schemaTypeIs, scopeEndsWith, uiTypeIs } f
 
 export const passwordConfirmControlTester = rankWith(3, scopeEndsWith("repeatPassword"));
 export const selectorMedicosTester = rankWith(3, scopeEndsWith("selectorMedicos"));
-export const datePickerWithRangeTester = rankWith(3, scopeEndsWith("datePickerWithRange"));
+export const datePickerWithRangeTester = rankWith(
+    3,
+    and(
+        uiTypeIs('Control'),
+        schemaTypeIs("object"),
+        schemaMatches((schema) => {
+            if (Object.prototype.hasOwnProperty.call(schema, 'customRender')) {
+                const cellschema = schema as { customRender?: string };
+                return cellschema.customRender === "DatePickerWithRange"
+            }
+            return false;
+        }),
+    )
+);
 
 export const customDatePickerControlTester = rankWith(
     3,
