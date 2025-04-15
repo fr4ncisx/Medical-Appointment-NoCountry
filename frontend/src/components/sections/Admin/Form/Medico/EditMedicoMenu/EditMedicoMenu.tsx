@@ -17,7 +17,9 @@ export const EditMedicoMenu = () => {
         description: medicoData.description,
         gender: medicoData.gender,
         speciality: medicoData.speciality,
-        state: medicoData.state,
+        state: {
+            state: medicoData.state
+        },
         first_name: medicoData.name,
         last_name: medicoData.lastname,
         phone: medicoData.phone,
@@ -44,7 +46,7 @@ export const EditMedicoMenu = () => {
                 documentId: medicoData.documentId,
                 speciality: data.speciality as Speciality,
                 description: data.speciality,
-                state: data.state,
+                state: data.state.state,
                 name: data.first_name,
                 lastname: data.last_name,
                 gender: data.gender as Gender,

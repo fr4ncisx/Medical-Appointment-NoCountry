@@ -4,7 +4,9 @@ export interface MedicoEditFormData {
     gender: string
     speciality: string
     phone: string
-    state: string
+    state: {
+        state: string
+    }
     description: string
 }
 
@@ -84,8 +86,13 @@ export const medicoEditFormSchema = {
             }
         },
         "state": {
-            "type": "string",
+            "type": "object",
             "customRender": "CustomSelectControl",
+            "properties": {
+                "state": {
+                    "type": "string",
+                }
+            }
         },
         "description": {
             "type": "string"
