@@ -6,11 +6,11 @@ export interface SignUpFormData {
     },
     first_name: string
     last_name: string
-    customSelect: {
+    gender: {
         gender: string
     },
     dni: string
-    customDatePicker: {
+    date: {
         date: string
     },
     phone: string
@@ -23,9 +23,9 @@ export const signUpSchema = {
     "required": [
         "first_name",
         "last_name",
-        "customSelect",
+        "gender",
         "dni",
-        "customDatePicker",
+        "date",
         "phone",
         "address",
         "email",
@@ -57,8 +57,9 @@ export const signUpSchema = {
         "last_name": {
             "type": "string",
         },
-        "customSelect": {
+        "gender": {
             "type": "object",
+            "customRender": "CustomSelectControl",
             "properties": {
                 "gender": {
                     "type": "string",
@@ -72,8 +73,9 @@ export const signUpSchema = {
                 "pattern": "El DNI debe tener 8 dígitos y debe ser escrito sin puntos"
             }
         },
-        "customDatePicker": {
+        "date": {
             "type": "object",
+            "customRender": "CustomDatePickerControl",
             "properties": {
                 "date": {
                     "type": "string",
@@ -156,10 +158,9 @@ export const signUpUiSchema = {
                             "elements": [
                                 {
                                     "type": "Control",
-                                    "scope": "#/properties/customSelect",
+                                    "scope": "#/properties/gender",
                                     "label": "Género",
                                     "options": {
-                                        "customControl": "customSelect",
                                         "key": "gender",
                                         "items": [
                                             { "value": 'MALE', "label": 'Hombre' },
@@ -176,12 +177,11 @@ export const signUpUiSchema = {
                         },
                         {
                             "type": "Control",
-                            "scope": "#/properties/customDatePicker",
+                            "scope": "#/properties/date",
                             "label": "Fecha de nacimiento",
                             "options": {
                                 "validateAge": "true",
                                 "key": "date",
-                                "customControl": "customDatePicker",
                             }
                         },
                     ]
