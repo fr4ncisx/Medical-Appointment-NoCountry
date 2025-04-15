@@ -20,7 +20,7 @@ export const editMedico = async ({ medicoId, token, data, setError }: Params) =>
         description: data?.description || "",
         gender: data?.gender as Gender,
         speciality: data?.speciality as Speciality,
-        state: data?.state as Provincia
+        state: data?.state.state as Provincia
     }
     const params: RequestInit = {
         method: "PUT",
