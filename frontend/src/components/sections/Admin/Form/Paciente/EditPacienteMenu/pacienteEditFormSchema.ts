@@ -1,10 +1,10 @@
 export interface PacienteEditFormData {
     first_name: string,
     last_name: string,
-    customSelect: {
+    gender: {
         gender: string
     },
-    customDatePicker: {
+    date: {
         date: string
     },
     phone: string,
@@ -17,8 +17,8 @@ export const pacienteEditFormSchema = {
     "required": [
         "first_name",
         "last_name",
-        "customSelect",
-        "customDatePicker",
+        "gender",
+        "date",
         "phone",
         "address",
         "emergency_contact_info"
@@ -30,16 +30,18 @@ export const pacienteEditFormSchema = {
         "last_name": {
             "type": "string",
         },
-        "customSelect": {
+        "gender": {
             "type": "object",
+            "customRender": "CustomSelectControl",
             "properties": {
                 "gender": {
                     "type": "string",
                 }
             }
         },
-        "customDatePicker": {
+        "date": {
             "type": "object",
+            "customRender": "CustomDatePickerControl",
             "properties": {
                 "date": {
                     "type": "string",
@@ -99,10 +101,9 @@ export const pacienteEditFormUiSchema = {
                             "elements": [
                                 {
                                     "type": "Control",
-                                    "scope": "#/properties/customSelect",
+                                    "scope": "#/properties/gender",
                                     "label": "Género",
                                     "options": {
-                                        "customControl": "customSelect",
                                         "key": "gender",
                                         "items": [
                                             { "value": 'MALE', "label": 'Hombre' },
@@ -112,12 +113,11 @@ export const pacienteEditFormUiSchema = {
                                 },
                                 {
                                     "type": "Control",
-                                    "scope": "#/properties/customDatePicker",
+                                    "scope": "#/properties/date",
                                     "label": "Fecha de nacimiento",
                                     "options": {
                                         "validateAge": "true",
                                         "key": "date",
-                                        "customControl": "customDatePicker",
                                     }
                                 },
                             ]

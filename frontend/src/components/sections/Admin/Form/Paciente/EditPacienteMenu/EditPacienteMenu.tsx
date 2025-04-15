@@ -16,10 +16,10 @@ export const EditPacienteMenu = () => {
     const pacienteData: PacienteData = useModalStore(state => state.modalData.data).itemData;
     const initData: PacienteEditFormData = {
         address: pacienteData.address,
-        customDatePicker: {
+        date: {
             date: formatDate(pacienteData.birthDate, "yyyy-MM-dd", "dd/MM/yyyy")
         },
-        customSelect: {
+        gender: {
             gender: pacienteData.gender
         },
         emergency_contact_info: pacienteData.emergencyContactInfo,
@@ -47,12 +47,12 @@ export const EditPacienteMenu = () => {
             const editedPaciente: PacienteData = {
                 id: pacienteData.id,
                 address: data.address,
-                birthDate: data.customDatePicker.date,
+                birthDate: data.date.date,
                 documentId: pacienteData.documentId,
                 emergencyContactInfo: data.emergency_contact_info,
                 firstName: data.first_name,
                 lastName: data.last_name,
-                gender: data.customSelect.gender,
+                gender: data.gender.gender,
                 phone: data.phone
             }
             addEditedRow(editedPaciente);

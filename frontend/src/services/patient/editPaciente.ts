@@ -14,12 +14,12 @@ interface Params {
 
 export const editPaciente = async ({ patientId, token, data, setError }: Params) => {
     const PACIENTE_EDIT_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/patient/${patientId}`;
-    const birthDateFormated = data?.customDatePicker.date && formatDate(data?.customDatePicker.date, "dd/MM/yyyy", "yyyy-MM-dd");
+    const birthDateFormated = data?.date.date && formatDate(data?.date.date, "dd/MM/yyyy", "yyyy-MM-dd");
     const pacienteInput: PacienteEditInput = {
         firstName: data?.first_name || "",
         lastName: data?.last_name || "",
         birthDate: birthDateFormated || "",
-        gender: data?.customSelect.gender as Gender,
+        gender: data?.gender.gender as Gender,
         phone: data?.phone || "",
         address: data?.address || "",
         emergencyContactInfo: data?.emergency_contact_info || "",
