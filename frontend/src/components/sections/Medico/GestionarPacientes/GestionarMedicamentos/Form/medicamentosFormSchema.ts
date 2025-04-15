@@ -3,7 +3,7 @@ export interface MedicamentosFormData {
     dosage: string
     frequency: string,
     notes: string
-    datePickerWithRange: {
+    dateRange: {
         startDate: string,
         endDate: string,
     }
@@ -15,7 +15,7 @@ export const medicamentosSchema = {
         "medicationName",
         "dosage",
         "frequency",
-        "datePickerWithRange",
+        "dateRange",
     ],
     "properties": {
         "medicationName": {
@@ -28,8 +28,9 @@ export const medicamentosSchema = {
         "frequency": {
             "type": "string",
         },
-        "datePickerWithRange": {
+        "dateRange": {
             "type": "object",
+            "customRender": "DatePickerWithRange",
             "properties": {
                 "startDate": {
                     "type": "string",
@@ -72,11 +73,8 @@ export const medicamentosUiSchema = {
             "elements": [
                 {
                     "type": "Control",
-                    "scope": "#/properties/datePickerWithRange",
+                    "scope": "#/properties/dateRange",
                     "label": "Consumir medicamento entre",
-                    "options": {
-                        "customControl": "datePickerWithRange",
-                    }
                 },
             ]
         },
