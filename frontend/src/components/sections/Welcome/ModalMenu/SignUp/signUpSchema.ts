@@ -42,6 +42,7 @@ export const signUpSchema = {
         },
         "repeatPassword": {
             "type": "object",
+            "customRender": "PasswordConfirmControl",
             "properties": {
                 "password": {
                     "type": "string",
@@ -123,9 +124,6 @@ export const signUpUiSchema = {
                         {
                             "type": "Control",
                             "scope": "#/properties/repeatPassword",
-                            "options": {
-                                "customControl": "passwordConfirm"
-                            }
                         }
                     ]
                 }

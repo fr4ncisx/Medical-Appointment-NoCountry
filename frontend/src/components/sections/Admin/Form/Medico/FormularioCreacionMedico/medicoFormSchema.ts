@@ -40,6 +40,7 @@ export const medicoFormSchema = {
         },
         "repeatPassword": {
             "type": "object",
+            "customRender": "PasswordConfirmControl",
             "properties": {
                 "password": {
                     "type": "string",
@@ -150,9 +151,6 @@ export const medicoFormUiSchema = {
                         {
                             "type": "Control",
                             "scope": "#/properties/repeatPassword",
-                            "options": {
-                                "customControl": "passwordConfirm"
-                            }
                         }
                     ]
                 }
