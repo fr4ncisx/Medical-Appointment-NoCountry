@@ -17,12 +17,6 @@ export interface IconData {
   Icon: ReactNode
 };
 
-export interface UserMenuItems {
-  to: string,
-  ariaLabel: string,
-  text: string
-};
-
 export interface Doctor {
   id: number;
   first_name: string;
