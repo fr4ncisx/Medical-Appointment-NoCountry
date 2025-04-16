@@ -13,8 +13,8 @@ interface Params {
 }
 
 export const editSchedule = ({ scheduleId, data, token, setError }: Params) => {
-    const startDateFormated = data?.datePickerWithRange.startDate ? new Date(formatDate(data?.datePickerWithRange.startDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
-    const endDateFormated = data?.datePickerWithRange.endDate ? new Date(formatDate(data?.datePickerWithRange.endDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
+    const startDateFormated = data?.dateRange.startDate ? new Date(formatDate(data?.dateRange.startDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
+    const endDateFormated = data?.dateRange.endDate ? new Date(formatDate(data?.dateRange.endDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
     const startTimeFormated = data?.time.startTime ? new Date(data.time.startTime) : new Date();
     const endTimeFormated = data?.time.endTime ? new Date(data.time.endTime) : new Date();
 
