@@ -1,8 +1,13 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
 import { MedicosGrid } from "./MedicosGrid/MedicosGrid";
 import { MedicosFilters } from "./MedicosFilters/MedicosFilters";
+import { useModalStore } from "@store/modal.store";
+import CustomModal from "@ui/CustomModal/CustomModal";
+import ModalMenu from "../Welcome/ModalMenu/ModalMenu";
 
 export const MedicosDisponiblesSection = () => {
+    const showModal = useModalStore((state) => state.modalData.showModal);
+
     return (
         <Container sx={{
             width: "100%",
@@ -23,6 +28,13 @@ export const MedicosDisponiblesSection = () => {
                     <MedicosGrid />
                 </Grid2>
             </Grid2>
+            {
+                showModal && (
+                    <CustomModal>
+                        <ModalMenu />
+                    </CustomModal>
+                )
+            }
         </Container>
     );
 };

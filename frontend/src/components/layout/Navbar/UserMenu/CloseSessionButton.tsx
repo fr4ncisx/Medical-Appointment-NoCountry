@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import { UserMenuStyles } from "./UserMenuStyles";
+import { MenuItem } from "@mui/material";
 import { Anchor } from "@ui/Anchor/Anchor";
 import { useNavigate } from "react-router";
 import { useUserStore } from "@store/user.store";
@@ -14,8 +13,8 @@ export const CloseSessionButton = () => {
     }
 
     return (
-        <Box sx={UserMenuStyles.link}>
+        <MenuItem>
             <Anchor to="/" onClick={handleCloseSession} ariaLabel="cerrar sesion del usuario" >Cerrar Sesion</Anchor>
-        </Box>
+        </MenuItem>
     );
 }

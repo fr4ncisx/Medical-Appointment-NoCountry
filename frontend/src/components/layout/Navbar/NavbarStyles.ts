@@ -16,13 +16,6 @@ export const NavbarStyles: ObjectStyles = {
         borderBottom: "1px solid #c1c1c1",
         ...DisplayFlexStyles
     },
-    logo: {
-        width: "70px",
-        height: "70px",
-        backgroundColor: "#4DDB94",
-        border: "20px solid #25C274",
-        borderRadius: "9999px"
-    },
     items: {
         ...DisplayFlexStyles,
         gap: "1rem"
