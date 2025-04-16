@@ -70,6 +70,7 @@ const DatePickerWithRange = ({ data, label, path, enabled, required, handleChang
                     {`${label} - Fecha Inicial`}
                 </Typography>
                 <DatePicker
+                    sx={{ width: "100%"}}
                     disabled={!enabled}
                     value={startDate}
                     name='startDate'
@@ -89,6 +90,7 @@ const DatePickerWithRange = ({ data, label, path, enabled, required, handleChang
                     {`${label} - Fecha Final`}
                 </Typography>
                 <DatePicker
+                    sx={{ width: "100%"}}
                     disabled={!enabled}
                     value={endDate}
                     name='endDate'

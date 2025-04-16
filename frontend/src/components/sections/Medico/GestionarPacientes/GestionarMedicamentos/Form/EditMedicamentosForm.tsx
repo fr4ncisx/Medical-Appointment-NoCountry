@@ -20,7 +20,7 @@ export const EditMedicamentosForm = () => {
         dosage: data?.dosage,
         frequency: data?.frequency,
         medicationName: data?.medicationName,
-        datePickerWithRange: {
+        dateRange: {
             startDate: formatDate(data.startDate, "yyyy-MM-dd", "dd/MM/yyyy"),
             endDate: formatDate(data.endDate, "yyyy-MM-dd", "dd/MM/yyyy"),
         }
@@ -35,7 +35,7 @@ export const EditMedicamentosForm = () => {
 
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setDataForm(data);
-        if (errors.length !== 0 || dataForm?.datePickerWithRange.startDate === null || dataForm?.datePickerWithRange.endDate === null) {
+        if (errors.length !== 0 || dataForm?.dateRange.startDate === null || dataForm?.dateRange.endDate === null) {
             setError({ type: "input", description: "entrada invalida en formulario" })
         } else {
             setError(null);

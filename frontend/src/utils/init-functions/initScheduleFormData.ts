@@ -8,7 +8,7 @@ export const initScheduleFormData = (itemData: ScheduleData) => {
     const endDateFormated = formatDate(itemData.endDate, "yyyy-MM-dd", "dd/MM/yyyy");
     
     const initialData: AgendaFormData = {
-        datePickerWithRange: {
+        dateRange: {
             startDate: startDateFormated,
             endDate: endDateFormated
         },

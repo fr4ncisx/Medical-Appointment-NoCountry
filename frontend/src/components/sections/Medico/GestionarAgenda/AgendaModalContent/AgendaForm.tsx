@@ -22,7 +22,7 @@ export const AgendaForm = () => {
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setDataForm(data);
         const existErrors = errors.length !== 0
-            || (dataForm?.datePickerWithRange?.startDate === null || dataForm?.datePickerWithRange?.endDate === null)
+            || (dataForm?.dateRange?.startDate === null || dataForm?.dateRange?.endDate === null)
             || (dataForm?.time?.startTime === null || dataForm?.time?.endTime === null);
         if (existErrors) {
             setError({ type: "input", description: "entrada invalida en formulario" })

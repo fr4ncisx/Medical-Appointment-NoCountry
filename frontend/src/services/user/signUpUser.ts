@@ -12,13 +12,13 @@ interface Params {
 
 export const signUpUser = async ({ data, setError }: Params) => {
     const SIGN_UP_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/patient`;
-    const birthDateFormated = data?.customDatePicker.date ? new Date(formatDate(data?.customDatePicker.date, "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
+    const birthDateFormated = data?.date.date ? new Date(formatDate(data?.date.date, "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
     const pacienteSignUp: PacienteInput = {
         firstName: data?.first_name || "",
         lastName: data?.last_name || "",
         documentId: data?.dni || "",
         birthDate: birthDateFormated,
-        gender: data?.customSelect.gender || "",
+        gender: data?.gender.gender || "",
         phone: data?.phone || "",
         address: data?.address || "",
         emergencyContactInfo: data?.emergency_contact_info || "",

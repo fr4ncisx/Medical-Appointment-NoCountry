@@ -6,13 +6,13 @@ import svg from "./img/wavesOpacity.svg";
 
 export const ContentBox = () => {
     return (
-        <>
+        <Box sx={{ backgroundColor: "#198751"}}>
             <img src={svg} alt="Ondas verdes" style={WaveOneStyle} />
             <Box sx={ContentBoxStyle.box}>
                 <Gallery />
                 <Details />
             </Box>
             <img src={svg} alt="Ondas verdes" style={WaveTwoStyle} />
-        </>
+        </Box>
     );
 }

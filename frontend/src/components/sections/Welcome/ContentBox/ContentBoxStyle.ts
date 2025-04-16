@@ -16,7 +16,7 @@ export const WaveOneStyle: CSSProperties = {
     width: "100%",
     transform: "rotate(180deg)",
     display: "block",
-    background: "linear-gradient(transparent 10%,#dadada 40%, #dadada 100%)",
+    background: "linear-gradient(transparent 5%,#dadada 10%, #dadada 100%)",
 }
 
 export const WaveTwoStyle: CSSProperties = {
