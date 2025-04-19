@@ -7,7 +7,7 @@
 services:
   healthapp:
     container_name: springboot
-    image: dockerfrancisx/healthapp:v1.25-SNAPSHOT ## USE MOST RECENT VERSION! https://hub.docker.com/r/dockerfrancisx/healthapp/tags
+    image: dockerfrancisx/healthapp:v1.25 ## USE MOST RECENT VERSION! https://hub.docker.com/r/dockerfrancisx/healthapp/tags
     ports: 
       - "8080:8080"
     environment:
@@ -32,14 +32,20 @@ services:
       ACTIVATE_SENDING_EMAIL: ## TRUE OR FALSE SENDING EMAILS
     restart: always
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   mysql:
     container_name: mysql-db
     image: mysql:9.0
     ports: 
-      - "3308:3306"
+      - "3306:3306" ## ALERT! IF YOU ALREADY HAVE MYSQL INSTALLED USE THIS VALUE -> "3308:3306"
     environment:
       MYSQL_DATABASE: healthapp
       MYSQL_ROOT_PASSWORD: ## PASSWORD FOR USER ROOT
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
