@@ -45,6 +45,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> credentialsVerifyError(InvalidCredentialsException ex) {
+        return new ResponseEntity<>(Map.of(STATUS_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Map<String, String>> missingServlet(MissingServletRequestParameterException ex) {
         return new ResponseEntity<>(Map.of(STATUS_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
