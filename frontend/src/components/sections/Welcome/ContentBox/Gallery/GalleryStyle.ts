@@ -20,7 +20,7 @@ export const GalleryStyle: ObjectStyles = {
         display: "flex",
         justifyContent: "space-evenly",
         alignItems: "center",
-        width: "minmax(300px, 390px)",
+        width: "300px",
     },
     galleryImgText: {
         display: "flex",
@@ -31,8 +31,8 @@ export const GalleryStyle: ObjectStyles = {
         transition: "opacity .2s ease-in-out",
     },
     galleryImg: {
-        width: "clamp(250px,15vw,300px)",
-        height: "clamp(250px,15vw,300px)"
+        width: "clamp(200px,25vw,300px)",
+        height: "clamp(200px,25vw,300px)"
     },
     galleryIcon: {
         color: "#fff"
