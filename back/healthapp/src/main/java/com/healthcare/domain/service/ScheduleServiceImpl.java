@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -99,6 +100,10 @@ public class ScheduleServiceImpl implements IScheduleService {
     }
 
     private void validateTime(ScheduleRequest scheduleRequest) {
+        LocalDate actualDate = LocalDate.now();
+        if(scheduleRequest.getStartDate().isBefore(actualDate)){
+            throw new InvalidDataException("No se pueden registrar horarios en tiempo pasado");
+        }
         if (scheduleRequest.getStartDate().isAfter(scheduleRequest.getEndDate())) {
             throw new InvalidDataException("El horario de fin no puede ser menor al horario de inicio");
         }
