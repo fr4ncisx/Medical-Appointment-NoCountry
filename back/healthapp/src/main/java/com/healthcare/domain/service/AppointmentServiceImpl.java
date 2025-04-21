@@ -14,6 +14,7 @@ import com.healthcare.domain.repository.PatientRepository;
 import com.healthcare.domain.repository.ScheduleRepository;
 import com.healthcare.domain.service.interfaces.IAppointmentService;
 
+import com.healthcare.infrastructure.security.service.SecurityOwnership;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -38,6 +39,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final ScheduleRepository scheduleRepository;
     private final ModelMapper modelMapper;
     private final MailService mailService;
+    private final SecurityOwnership securityOwnership;
 
     @Value("${email.sendEmail}")
     private boolean sendEmail;
@@ -64,7 +66,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
     @Transactional
     public ResponseEntity<?> updateAppointment(Long appointmentId, AppointmentRequest appointmentRequest) {
         var appointment = getAppointment(appointmentId);
-        checkIfNotConfirmed(appointment);
+        Long patientId = appointment.getPatient().getId();
+        ownershipVerifyPassed(patientId);
         isTimeTaken(appointment.getMedic(), appointmentRequest);
         outOfTimeRangeValidation(appointment.getMedic().getId(), appointmentRequest.getDate(), appointmentRequest.getTime());
         modelMapper.map(appointmentRequest, appointment);
@@ -76,6 +79,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
     @Transactional
     public ResponseEntity<?> cancelAppointment(Long appointmentId) throws MessagingException {
         var appointment = getAppointment(appointmentId);
+        Long patientId = appointment.getPatient().getId();
+        ownershipVerifyPassed(patientId);
         checkIfNotConfirmed(appointment);
         appointment.setStatus(Status.CANCELADA);
         appointmentRepository.save(appointment);
@@ -153,5 +158,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
         if (list.isEmpty()) {
             throw new InvalidDataException("No hay disponibilidad médica para crear una cita en ese horario");
         }
+    }
+
+    private void ownershipVerifyPassed(Long patientId){
+        securityOwnership.isSamePatientId(patientId);
     }
 }

@@ -18,7 +18,7 @@ public class AppointmentController {
 
     private final IAppointmentService appointmentService;
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityOwnership.isSamePatientId(#patientId)")
     @PostMapping("/schedule")
     public ResponseEntity<?> scheduleAppointment(@RequestParam Long patientId, @RequestParam Long medicId,
             @RequestBody @Valid AppointmentRequest appointmentRequest) throws MessagingException {
@@ -26,7 +26,7 @@ public class AppointmentController {
                 patientId,
                 medicId, appointmentRequest);
     }
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'})")
     @PutMapping("/update/{appointmentId}")
     public ResponseEntity<?> updateAppointment(
             @PathVariable Long appointmentId,
@@ -36,13 +36,13 @@ public class AppointmentController {
                 appointmentRequest);
     }
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'})")
     @PutMapping("/cancel/{appointmentId}")
     public ResponseEntity<?> cancelAppointment(@PathVariable Long appointmentId) throws MessagingException {
         return appointmentService.cancelAppointment(appointmentId);
     }
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'}) and @securityOwnership.isSamePatientId(#patientId)")
     @GetMapping("/patient/{patientId}")
     public ResponseEntity<?> getAppointmentsByPatient(@PathVariable Long patientId) {
         return appointmentService.getAppointmentsByPatient(patientId);
