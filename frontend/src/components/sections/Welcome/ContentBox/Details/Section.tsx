@@ -7,7 +7,7 @@ export const Section = ({ subtitle, body, icon}: DetailsSection) => {
         <Box sx={DetailsStyle.sectionContainer}>
             <Box sx={DetailsStyle.iconContainer}>{icon}</Box>
             <Box>
-                <Typography variant="subtitle1" fontWeight="bold" color="white">
+                <Typography variant="subtitle1" fontWeight={"semibold"} color="white">
                     {subtitle}
                 </Typography>
                 <Typography variant="body1" color="white">{body}</Typography>
