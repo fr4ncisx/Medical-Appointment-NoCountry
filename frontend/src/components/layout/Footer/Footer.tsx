@@ -10,11 +10,9 @@ export const Footer = () => {
       component="footer"
       sx={FooterStyle.footerContainer}
       maxWidth={false}
-    >      
+    >
       <LogoSection />
-
       <LinkSection />
-
       <SocialSection />
     </Container>
   );
