@@ -27,7 +27,7 @@ public class PatientController {
         return patientService.getAllPatients();
     }
     
-    @PreAuthorize("hasAnyRole({'ADMIN', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'PACIENTE'}) and @securityOwnership.isSamePatientId(#id)")
     @GetMapping("/{id}")
     public ResponseEntity<?> getPatientById(@PathVariable Long id){
         return patientService.getPatientById(id);
@@ -38,13 +38,13 @@ public class PatientController {
         return patientService.createPatient(patientDTO);
     }
 
-    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO'})")
+    @PreAuthorize("hasAnyRole({'ADMIN','MEDICO'}) and @securityOwnership.isSamePatientId(#id)")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePatient(@PathVariable Long id) {
         return patientService.deletePatient(id);
     }
 
-    @PreAuthorize("hasAnyRole({'ADMIN', 'PACIENTE'})")
+    @PreAuthorize("hasAnyRole({'ADMIN', 'PACIENTE'}) and @securityOwnership.isSamePatientId(#patientId)")
     @PutMapping("/{patientId}")
     public ResponseEntity<Map<String, String>> editPatient(@PathVariable Long patientId, @RequestBody @Valid PatientRequestUpdate patient) {
         patientService.edit(patientId, patient);
