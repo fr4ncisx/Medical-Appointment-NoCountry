@@ -2,22 +2,22 @@ import { ObjectStyles } from "@tipos/component";
 
 export const DetailsStyle: ObjectStyles = {
   rightContainer: {
-    width: "50%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
-    padding: 2,
+    padding: "1rem"
   },
   sectionTitle: {
     fontWeight: "bold",
     color: "white",
-    textAlign: "center",
-    height: "100px"
+    width: "100%",
+    textAlign: "center"
   },
   sectionContainer: {
     display: "flex",
     alignItems: "center",
+    flexWrap: 1,
     gap: 2,
     paddingTop: 1,
     mb: 2,

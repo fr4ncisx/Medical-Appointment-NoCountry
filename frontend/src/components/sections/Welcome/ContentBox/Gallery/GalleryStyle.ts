@@ -3,28 +3,24 @@ import { CSSProperties } from "react";
 
 export const GalleryStyle: ObjectStyles = {
     galleryContainer: {
-        position: "relative",
-        height: "300px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "space-evenly",
-        padding: "1rem"
+        padding: "1rem",
+        textAlign: "center"
     },
     galleryTitle: {
         color: "#fff",
         textAlign: "center",
-        height: "100px"
+        minHeight: "100px"
     },
     galleryContImage: {
         position: "relative",
         display: "flex",
         justifyContent: "space-evenly",
         alignItems: "center",
-        minWidth: "392px",
-    },
-    galleryContDoctors: {
-        postion: "relative",
+        width: "minmax(300px, 390px)",
     },
     galleryImgText: {
         display: "flex",
@@ -35,8 +31,8 @@ export const GalleryStyle: ObjectStyles = {
         transition: "opacity .2s ease-in-out",
     },
     galleryImg: {
-        width: "300px",
-        height: "300px"
+        width: "clamp(250px,15vw,300px)",
+        height: "clamp(250px,15vw,300px)"
     },
     galleryIcon: {
         color: "#fff"
