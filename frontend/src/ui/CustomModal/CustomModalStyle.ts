@@ -9,17 +9,18 @@ export const CustomModalStyle: ObjectStyles = {
     modalBox: {
         position: 'absolute',
         bgcolor: '#f1f1f1',
-        borderRadius: "20px",
+        borderRadius: "15px",
     }
 };
 
 export const ModalContentStyle: ObjectStyles = {
     container: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        padding: "10px"
     },
     header: {
-        padding: "0 20px",
+        padding: "0 0 15px",
         textAlign: "center",
         lineHeight: "1.5rem"
     },
@@ -28,12 +29,8 @@ export const ModalContentStyle: ObjectStyles = {
         fontSize: "1.7rem"
     },
     closeButton: {
-        mt: "0.5rem",
-        padding: "0 20px",
         display: "flex",
-        justifyContent: "end"
-    },
-    body: {
-        padding: "20px",
+        justifyContent: "end",
+        mb: "1rem"
     }
 };
