@@ -5,7 +5,6 @@ export const FormStyle: ObjectStyles = {
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
-        width: "500px",
     },
     form: {
         display: "flex",
