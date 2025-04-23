@@ -12,7 +12,7 @@ export const ModalContent = ({ children }: { children: ReactNode }) => {
     return (
         <Box sx={ModalContentStyle.container}>
             <Box sx={ModalContentStyle.closeButton}>
-                <IconButton onClick={handleClose} aria-label="cerrar modal">
+                <IconButton sx={{ padding: "0px"}} onClick={handleClose} aria-label="cerrar modal">
                     <Close />
                 </IconButton>
             </Box>
@@ -22,7 +22,7 @@ export const ModalContent = ({ children }: { children: ReactNode }) => {
                     <Typography fontFamily="Inria Sans Bold" sx={ModalContentStyle.title}>{modalDataTitle}</Typography>
                 }
             </Box>
-            <Box sx={ModalContentStyle.body}>
+            <Box>
                 <ErrorBoundary fallback={<Typography variant='body2'>Ocurrio un error al mostrar el modal</Typography>}>
                     {children}
                 </ErrorBoundary>
