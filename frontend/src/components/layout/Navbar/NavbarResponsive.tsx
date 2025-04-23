@@ -41,7 +41,7 @@ export default function NavbarResponsive() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => setAnchorEl(null);
+  const handleCloseAnchor = () => setAnchorEl(null);
 
   const setModalData = useModalStore((state) => state.setModalData);
 
@@ -51,6 +51,7 @@ export default function NavbarResponsive() {
       operation: "login",
       showModal: true,
     });
+    handleCloseAnchor();
   };
 
   const handleClickSignUp = () => {
@@ -59,10 +60,11 @@ export default function NavbarResponsive() {
       operation: "sign_up",
       showModal: true,
     });
+    handleCloseAnchor();
   };
 
   const handleNavigate = (route: string) => {
-    handleClose();
+    handleCloseAnchor();
     navigate(route);
   };
 
@@ -82,7 +84,7 @@ export default function NavbarResponsive() {
         id="long-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseAnchor}
         sx={{ boxShadow: "none" }}
         slotProps={{
           paper: {
