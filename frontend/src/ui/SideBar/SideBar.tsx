@@ -1,9 +1,9 @@
 import { Grid2, List } from "@mui/material";
 import { NavigationItemData } from "@tipos/component";
-import { NavigationItem } from "./NavigationItem/NavigationItem";
+import { NavigationItem } from "../NavigationItem/NavigationItem";
 import { SideBarStyles } from "./SideBarStyles";
-import { CloseSideBarButton } from "./CloseSideBarButton";
 import { useState } from "react";
+import { CloseSideBarButton } from "./CloseSideBarButton";
 
 interface Props {
     links: NavigationItemData[];
