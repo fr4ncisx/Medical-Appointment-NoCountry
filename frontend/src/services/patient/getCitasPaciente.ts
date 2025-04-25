@@ -1,0 +1,24 @@
+import { Parameters } from "@tipos/types";
+import { handleError } from "@utils/handleError";
+
+export const getCitasPaciente = ({ token, setDataRows, setLoading, setError, idForEndpoint }: Parameters) => {
+    setLoading(true);
+    const MEDIC_APPOINTMENTS_URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/appointments/patient/${idForEndpoint}`;
+    fetch(MEDIC_APPOINTMENTS_URL, { method: "GET", headers: { 'Authorization': `${token}` } })
+        .then(async (response) => {
+            const responseBody = await response.json();
+            if (!response.ok) {
+                throw new Error(`${response.status}: ${responseBody.error || responseBody.ERROR}`);
+            }
+            return responseBody;
+        })
+        .then((result) => {
+            setDataRows(result.appointments);
+        })
+        .catch((e) => {
+            const error = handleError(e);
+            setDataRows([]);
+            setError(error);
+        })
+        .finally(() => setLoading(false));
+}

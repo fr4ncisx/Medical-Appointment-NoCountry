@@ -38,6 +38,8 @@ export type Section = "gestionar_pacientes" | "tabla_medicamentos";
 
 export type TabsAdmin = "pacientes" | "medicos";
 
+export type TabsPaciente = "citas" | "historial_medico";
+
 export enum EspecialidadesMedicas {
     CLINICA = "Clínica",
     CARDIOLOGIA = "Cardiología",
