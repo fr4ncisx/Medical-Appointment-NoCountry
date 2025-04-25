@@ -1,4 +1,4 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent } from "react";
 import "cally";
 import { Box, Typography } from '@mui/material';
 import { AgendaCSStyles, AgendaTuCitaStyles } from "./AgendaTuCitaStyles";

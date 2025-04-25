@@ -4,7 +4,11 @@ import { CustomButton } from "@ui/CustomButton/CustomButton";
 import { useUserStore } from "@store/user.store";
 import { useNavigate } from "react-router";
 
-export const AgendarCitaButton = () => {
+interface Props {
+    fontSize?: string
+}
+
+export const AgendarCitaButton = ({ fontSize="1.4rem"} :Props) => {
     const isLogged = useUserStore(state => state.isLogged);
     const isUserLogged = isLogged();
     const navigate = useNavigate();
@@ -27,7 +31,7 @@ export const AgendarCitaButton = () => {
 
     return (
         <CustomButton onClick={handleAgendaCita}>
-            <Typography fontFamily="Inria Sans Bold" textTransform="none" fontSize={"1.4rem"}>
+            <Typography fontFamily="Inria Sans Bold" textTransform="none" fontSize={fontSize}>
                 Agenda tu cita
             </Typography>
         </CustomButton>

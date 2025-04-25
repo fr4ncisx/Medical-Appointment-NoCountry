@@ -7,20 +7,17 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState, useEffect } from "react";
 import { Option } from "@tipos/component";
-import { useUserStore } from "@store/user.store";
-import { DoctorData } from "@tipos/backendTypes";
+import { MedicoData } from "@tipos/backendTypes";
 
 interface MedicResponse {
-    medics: DoctorData[];
+    medics: MedicoData[];
 }
 
 const SelectorMedicos = ({ id, data, label, path, required, handleChange }: ControlProps) => {
     const value: any = data?.medic;
     const [options, setOptions] = useState<Option[]>([]);
-    const getToken = useUserStore(state => state.getToken);
 
     useEffect(() =>{
-        const token = getToken();
         const url_medic = `${import.meta.env.VITE_BACKEND_URL}/api/v1/medic`;
         const params: RequestInit = {method: "GET", headers: {"Content-Type": "application/json"}}
         fetch(url_medic, params)

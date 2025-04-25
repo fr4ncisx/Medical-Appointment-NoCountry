@@ -20,12 +20,23 @@ export const TableContextProvider = ({ children, idForEndpoint = "", fetchRows, 
     const token = useUserStore(state => state.getToken)();
 
     const handleFetchRows = useCallback(() => {
-        setErrorTableRows(previuosState => null);
+        setErrorTableRows(_previuosState => null);
         fetchRows({ token, setDataRows, setError: setErrorTableRows, setLoading: setLoadingTableRows, idForEndpoint });
     }, []);
 
+    const addEditedRow = (itemEdited: any) => {
+        removeRow(itemEdited.id);
+        const newRows = dataRows.map((schedule) => {
+            if (schedule.id === itemEdited.id) {
+                return itemEdited;
+            }
+            return schedule;
+        });
+        setDataRows(newRows);
+    }
+
     const addRow = (newItem: any) => {
-        setErrorTableRows(previuosState => null);
+        setErrorTableRows(_previuosState => null);
         setDataRows([...dataRows, newItem]);
     }
 
@@ -57,7 +68,8 @@ export const TableContextProvider = ({ children, idForEndpoint = "", fetchRows, 
         refetchRows: handleFetchRows,
         handleAdd,
         addRow,
-        removeRow
+        removeRow,
+        addEditedRow
     }
 
     return (

@@ -23,7 +23,7 @@ export const MedicamentosForm = () => {
 
     const handleChange = ({ data, errors }: { data: any, errors: any[] }) => {
         setDataForm(data);
-        if (errors.length !== 0 || dataForm?.datePickerWithRange.startDate === null || dataForm?.datePickerWithRange.endDate === null) {
+        if (errors.length !== 0 || dataForm?.dateRange.startDate === null || dataForm?.dateRange.endDate === null) {
             setError({ type: "input", description: "entrada invalida en formulario" })
         } else {
             setError(null);
@@ -38,7 +38,7 @@ export const MedicamentosForm = () => {
         if (response) {
             showSonnerToast({
                 title: "Medicamento añadido",
-                description: "Se a asigno un nuevo medicamento al paciente",
+                description: "Se asigno correctamente el medicamento al paciente",
                 type: "success"
             });
             const newMedicamentoData: MedicacionData = { ...response }

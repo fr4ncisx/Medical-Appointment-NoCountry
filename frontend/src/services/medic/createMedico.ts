@@ -1,5 +1,5 @@
-import { MedicoFormData } from "@components/sections/Admin/Form/medicoFormSchema"
-import { Gender, MedicoCreateResponse, MedicoInput, Speciality } from "@tipos/backendTypes"
+import { MedicoFormData } from "@components/sections/Admin/Form/Medico/FormularioCreacionMedico/medicoFormSchema"
+import { Gender, MedicoCreateResponse, MedicoInput, Provincia, Speciality } from "@tipos/backendTypes"
 import { CustomError } from "@tipos/types"
 import { handleError } from "@utils/handleError"
 import { Dispatch, SetStateAction } from "react"
@@ -22,7 +22,7 @@ export const createMedico = async ({ token, data, setError }: Params) => {
         name: data?.first_name || "",
         phone: data?.phone || "",
         speciality,
-        state: data?.status || "",
+        state: data?.state.state as Provincia,
         user: {
             email: data?.email || "",
             password: data?.repeatPassword.password || ""

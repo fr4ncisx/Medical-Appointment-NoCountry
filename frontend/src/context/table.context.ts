@@ -8,10 +8,11 @@ const initValue: TableContextType = {
     loadingTableRows: false,
     errorTableRows: null,
     handleAdd: null,
-    handleSetError: (error) => {},
+    handleSetError: (_error) => {},
     refetchRows: () => {},
-    addRow: (newItem: any) => {},
-    removeRow: (idAEliminar) => {}
+    addRow: (_newItem) => {},
+    removeRow: (_idAEliminar) => {},
+    addEditedRow: (_idItemEliminar) => {}
 };
 
 export interface TableContextType {
@@ -23,6 +24,7 @@ export interface TableContextType {
     handleAdd: (() => void) | null
     addRow: (newItem: any) => void
     removeRow: (idAEliminar: number) => void
+    addEditedRow: (itemEdited: any) => void
 }
 
 export const TableContext = createContext<TableContextType>(initValue);

@@ -1,10 +1,11 @@
 import { materialRenderers } from "@jsonforms/material-renderers";
-import { customDatePickerControlTester, customSelectControlTester, datePickerWithRangeTester, passwordConfirmControlTester, selectorMedicosTester } from "./JsonFormTesters";
+import { customDatePickerControlTester, customSelectControlTester, datePickerWithRangeTester, passwordConfirmControlTester, selectorMedicosTester, timePickerWithRangeTester } from "./JsonFormTesters";
 import PasswordConfirmControl from "@components/custom-controls/PasswordConfirmControl";
 import CustomDatePickerControl from "@components/custom-controls/CustomDatePickerControl";
 import CustomSelectControl from "@components/custom-controls/CustomSelectControl";
 import DatePickerWithRange from "@components/custom-controls/DatePickerWithRange";
 import SelectorMedicos from "@components/custom-controls/SelectorMedicos";
+import TimePickerWithRange from "@components/custom-controls/TimePickerWithRange";
 
 const renderers = [
   ...materialRenderers,
@@ -13,6 +14,7 @@ const renderers = [
   { tester: customSelectControlTester, renderer: CustomSelectControl},
   { tester: selectorMedicosTester, renderer: SelectorMedicos},
   { tester: datePickerWithRangeTester, renderer: DatePickerWithRange },
+  { tester: timePickerWithRangeTester, renderer: TimePickerWithRange}
 ];
 
 export default renderers;

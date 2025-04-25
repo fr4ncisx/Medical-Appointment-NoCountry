@@ -5,7 +5,7 @@ import { PATIENT_LINKS } from "../PATIENT_LINKS";
 import { HistorialCitasContent } from "./HistorialCitasContent";
 import { useUserStore } from "@store/user.store";
 
-export const HistorialCitas = () => {
+export const HistorialCitasPaciente = () => {
     const idPaciente = useUserStore(state => state.userData?.id);
 
     return (

@@ -14,8 +14,8 @@ interface Params {
 }
 
 export const editMedication = ({ medicacionId, pacienteId, data, token, setError }: Params) => {
-    const startDateFormated = data?.datePickerWithRange.startDate ? new Date(formatDate(data?.datePickerWithRange.startDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
-    const endDateFormated = data?.datePickerWithRange.endDate ? new Date(formatDate(data?.datePickerWithRange.endDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
+    const startDateFormated = data?.dateRange.startDate ? new Date(formatDate(data?.dateRange.startDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
+    const endDateFormated = data?.dateRange.endDate ? new Date(formatDate(data?.dateRange.endDate.toString(), "dd/MM/yyyy", "yyyy-MM-dd")) : new Date();
 
     const medicamentoData: MedicationInput = {
         dosage: data?.dosage || "",

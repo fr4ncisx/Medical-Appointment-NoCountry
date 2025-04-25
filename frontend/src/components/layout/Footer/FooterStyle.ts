@@ -30,6 +30,7 @@ export const FooterStyle: ObjectStyles = {
   footerLinksSectionTitle: {
     color: "#198751",
     fontSize: "18px",
+    cursor: "default"
   },
   footerSocial: {
     textAlign: "center",
@@ -40,7 +41,10 @@ export const FooterStyle: ObjectStyles = {
   },
   footerLink: {
     fontSize: "16px",
-    lineHeight: "1.2"
+    lineHeight: "1.2",
+    ":hover": {
+      textDecoration: "underline"
+    }
   },
   footerIconsContainer: {
     display: "flex",
