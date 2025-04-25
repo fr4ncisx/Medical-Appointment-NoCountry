@@ -3,12 +3,12 @@ import { SideBarStyles } from "./SideBarStyles";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-interface Props {
+export interface CloseSideBarButtonProps {
     sideBarSize: string
     handleChangeSize: () => void
 }
 
-export const CloseSideBarButton = ({ sideBarSize, handleChangeSize }: Props) => {
+export const CloseSideBarButton = ({ sideBarSize, handleChangeSize }: CloseSideBarButtonProps) => {
     const isExpanded = sideBarSize === "190px";
     return (
         <IconButton sx={{
