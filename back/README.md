@@ -1,6 +1,6 @@
 <div style="text-align: center;">
   <img src="https://img.shields.io/badge/status-in%20development-yellow" alt="Status">
-  <img src="https://img.shields.io/badge/Versión-1.0b-blue" alt="Versión">
+  <img src="https://img.shields.io/docker/v/dockerfrancisx/healthapp?label=Version&style=flat" alt="Version">
   <img src="https://img.shields.io/github/last-commit/fr4ncisx/medicalappointment-nocountry" alt="Last commit">
 </div>
 <div style="text-align: center;">
@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/Security-JWT-red" alt="JWT">
   <img src="https://img.shields.io/badge/Database-MySQL-blue" alt="Database">
   <img src="https://img.shields.io/badge/Maven-4.0.0-C71A36?logo=apachemaven" alt="Maven">
-  <img src="https://img.shields.io/badge/Docker-28.0.1-blue?logo=docker" alt="Docker">
+  <img src="https://img.shields.io/badge/Docker-28.0.4-blue?logo=docker" alt="Docker">
 </div>
 
 ## Indice
@@ -19,6 +19,10 @@
 [Instrucciones](#instrucciones)
 
 [Documentación](#documentación)
+
+[Documentación de Caché](./CACHE.md)
+
+[Documentación Docker](./DOCKER.md)
 
 ### Descripción del proyecto
 
