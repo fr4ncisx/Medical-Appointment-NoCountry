@@ -18,6 +18,10 @@ import com.healthcare.domain.service.interfaces.IMedicService;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,6 +41,7 @@ public class MedicServiceImpl implements IMedicService {
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Cacheable(value = "medics", key = "#speciality + '-' + #gender + '-' + #state")
     @Override
     public ResponseEntity<?> getAllMedics(String speciality, String gender, String state) {
         List<Medic> medics = medicRepository.findAll();
@@ -68,6 +73,7 @@ public class MedicServiceImpl implements IMedicService {
         return ResponseEntity.ok(Map.of("medics", medicDTOS));
     }
 
+    @Cacheable(value="medic", key= "#id")
     @Override
     public ResponseEntity<?> getMedicById(Long id) {
         Medic medic = medicRepository.findById(id)
@@ -76,6 +82,8 @@ public class MedicServiceImpl implements IMedicService {
         return ResponseEntity.ok(Map.of("medic", dto));
     }
 
+    @CacheEvict(value = "medics", allEntries = true)
+    @CachePut(value = "medic", key = "#medicRequest.documentId")
     @Override
     @Transactional
     public ResponseEntity<?> createMedic(MedicRequest medicRequest) {
@@ -97,6 +105,10 @@ public class MedicServiceImpl implements IMedicService {
                 "medic", modelMapper.map(medic, MedicUserResponse.class)));
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "medic", key = "#id"),
+            @CacheEvict(value = "medics", allEntries = true)
+    })
     @Override
     @Transactional
     public ResponseEntity<?> deleteMedic(Long id) {
@@ -111,6 +123,11 @@ public class MedicServiceImpl implements IMedicService {
         return ResponseEntity.ok(Map.of("message", "Médico eliminado con éxito"));
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "medic", key = "#id"),
+            @CacheEvict(value = "medics", allEntries = true)
+    })
+    @CachePut(value = "medic", key = "#id")
     @Transactional
     @Override
     public void edit(Long id, MedicRequestUpdate medicRequest) {
