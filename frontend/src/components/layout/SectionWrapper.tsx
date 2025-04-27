@@ -24,7 +24,7 @@ export const SectionWrapper = ({ sideBarItems, children }: Props) => {
       ) : (
         <SideBar links={sideBarItems} />
       )}
-      <Grid2 size={{ xs: 12, md: "grow" }} padding="1.5em">
+      <Grid2 size={{ xs: 12, md: "grow" }} padding="5vh 5vw">
         {children}
       </Grid2>
     </Grid2>
