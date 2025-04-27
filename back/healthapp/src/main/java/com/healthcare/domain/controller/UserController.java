@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import com.healthcare.domain.dto.response.UserResponse;
 import com.healthcare.domain.service.interfaces.IUserService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -26,15 +25,15 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'})")
     @GetMapping
-    public ResponseEntity<UserResponse> getUserDetails(@RequestParam String email, HttpServletRequest request) {
-        var response = userService.getUser(email, request);
+    public ResponseEntity<UserResponse> getUserDetails(@RequestParam String email) {
+        var response = userService.getUser(email);
         return ResponseEntity.ok(response);
     }
 
     @PreAuthorize("hasAnyRole({'ADMIN','MEDICO','PACIENTE'})")
     @PutMapping("{id}")
-    public ResponseEntity<Map<String, String>> editUser(@PathVariable Long id, @RequestBody @Valid UserRequestUpdate user, HttpServletRequest request) {
-        userService.edit(id, user, request);
+    public ResponseEntity<Map<String, String>> editUser(@PathVariable Long id, @RequestBody @Valid UserRequestUpdate user) {
+        userService.edit(id, user);
         return ResponseEntity.ok(Response.create("Usuario editado exitosamente"));
     }
 }
