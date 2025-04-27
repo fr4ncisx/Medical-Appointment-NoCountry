@@ -11,7 +11,7 @@ services:
     ports: 
       - "8080:8080"
     environment:
-      DB_URL: jdbc:mysql://mysql:3306/healthapp?serverTimezone=UTC
+      DB_URL: jdbc:mysql://mysql:3306/healthapp?serverTimezone=America/Argentina/Buenos_Aires
       MYSQL_USER: root
       MYSQL_PASSWORD: ## INSERT FROM READ BELOW MYSQL_ROOT_PASSWORD
       HIBERNATE_DDL: update
@@ -30,6 +30,8 @@ services:
       SMTP_EMAIL: ## AN EMAIL FOR SENDING EMAILS
       SMTP_PASSWORD: ## SMTP APPLICATION PASSWORD (NOT LOGIN PASSWORD)
       ACTIVATE_SENDING_EMAIL: ## TRUE OR FALSE SENDING EMAILS
+      CACHE_EXPIRATION_TIME: 900
+      CACHE_MAX_ELEMENTS: 100
     restart: always
     depends_on:
       mysql:
