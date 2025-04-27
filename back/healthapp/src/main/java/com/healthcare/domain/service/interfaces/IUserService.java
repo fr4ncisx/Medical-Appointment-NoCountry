@@ -5,5 +5,6 @@ import com.healthcare.domain.dto.response.UserResponse;
 
 public interface IUserService {
     UserResponse getUser(String email);
+
     void edit(Long id, UserRequestUpdate user);
 }
