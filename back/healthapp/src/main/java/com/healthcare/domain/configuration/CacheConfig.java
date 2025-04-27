@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CacheConfig {
 
-    @Value("${cache.expiration.time:600}")
+    @Value("${cache.expiration.time}")
     private long EXPIRATION_TIME;
 
-    @Value("${cache.max.elements:100}")
+    @Value("${cache.max.elements}")
     private long MAX_ELEMENTS;
 
     @Bean
