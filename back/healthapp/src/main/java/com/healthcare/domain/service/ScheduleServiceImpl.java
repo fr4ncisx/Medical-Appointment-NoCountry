@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -31,7 +32,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> createSchedule(Long medicId, ScheduleRequest scheduleRequest) {
+    public ResponseEntity<ScheduleResponse> createSchedule(Long medicId, ScheduleRequest scheduleRequest) {
         Medic medic = getMedic(medicId);
         var mediSchedule = medic.getSchedules();
         checkTakenSchedule(mediSchedule, scheduleRequest);
@@ -43,7 +44,7 @@ public class ScheduleServiceImpl implements IScheduleService {
     }
 
     @Override
-    public ResponseEntity<?> getAllSchedulesByMedicId(Long medicId) {
+    public ResponseEntity<List<ScheduleResponse>> getAllSchedulesByMedicId(Long medicId) {
         Medic medic = getMedic(medicId);
 
         List<Schedule> schedules = medic.getSchedules();
@@ -60,7 +61,7 @@ public class ScheduleServiceImpl implements IScheduleService {
     }
 
     @Override
-    public ResponseEntity<?> getScheduleById(Long scheduleId) {
+    public ResponseEntity<ScheduleResponse> getScheduleById(Long scheduleId) {
         Schedule schedule = getSchedule(scheduleId);
 
         ScheduleResponse scheduleResponse = modelMapper.map(schedule, ScheduleResponse.class);
@@ -70,7 +71,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> updateSchedule(Long scheduleId, ScheduleRequest scheduleRequest) {
+    public ResponseEntity<ScheduleResponse> updateSchedule(Long scheduleId, ScheduleRequest scheduleRequest) {
         Schedule sch = getSchedule(scheduleId);
         checkTakenSchedule(sch, scheduleRequest);
         modelMapper.map(scheduleRequest, sch);
@@ -83,7 +84,7 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> deleteSchedule(Long scheduleId) {
+    public ResponseEntity<Map<String,String>> deleteSchedule(Long scheduleId) {
         Schedule schedule = getSchedule(scheduleId);
         scheduleRepository.delete(schedule);
         return ResponseEntity.ok(Response.create("message", "Horario eliminado con éxito"));

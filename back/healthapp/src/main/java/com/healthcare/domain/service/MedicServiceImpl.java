@@ -43,7 +43,7 @@ public class MedicServiceImpl implements IMedicService {
 
     @Cacheable(value = "medics", key = "#speciality + '-' + #gender + '-' + #state")
     @Override
-    public ResponseEntity<?> getAllMedics(String speciality, String gender, String state) {
+    public ResponseEntity<Map<String, List<MedicResponse>>> getAllMedics(String speciality, String gender, String state) {
         List<Medic> medics = medicRepository.findAll();
 
         if (speciality != null) {
@@ -75,7 +75,7 @@ public class MedicServiceImpl implements IMedicService {
 
     @Cacheable(value="medic", key= "#id")
     @Override
-    public ResponseEntity<?> getMedicById(Long id) {
+    public ResponseEntity<Map<String, MedicResponse>> getMedicById(Long id) {
         Medic medic = medicRepository.findById(id)
                 .orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
         MedicResponse dto = modelMapper.map(medic, MedicResponse.class);
@@ -86,7 +86,7 @@ public class MedicServiceImpl implements IMedicService {
     @CachePut(value = "medic", key = "#medicRequest.documentId")
     @Override
     @Transactional
-    public ResponseEntity<?> createMedic(MedicRequest medicRequest) {
+    public ResponseEntity<Map<String, Object>> createMedic(MedicRequest medicRequest) {
         var userRequest = medicRequest.getUser();
         if (medicRepository.existsByDocumentId(medicRequest.getDocumentId())) {
             throw new DuplicatedEntryEx("Médico ya registrado");
@@ -111,7 +111,7 @@ public class MedicServiceImpl implements IMedicService {
     })
     @Override
     @Transactional
-    public ResponseEntity<?> deleteMedic(Long id) {
+    public ResponseEntity<Map<String, String>> deleteMedic(Long id) {
         Medic medic = medicRepository.findById(id)
                 .orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
 

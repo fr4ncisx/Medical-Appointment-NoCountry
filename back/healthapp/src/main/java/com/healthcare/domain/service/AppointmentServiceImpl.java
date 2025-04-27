@@ -49,7 +49,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> scheduleAppointment(Long patientId, Long medicId, AppointmentRequest appointmentRequest) throws MessagingException {
+    public ResponseEntity<Map<String, Object>> scheduleAppointment(Long patientId, Long medicId, AppointmentRequest appointmentRequest) throws MessagingException {
         var medic = getMedicFromRepository(medicId);
         var patient = getPatientFromRepository(patientId);
         isTimeTaken(medic, appointmentRequest);
@@ -64,7 +64,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> updateAppointment(Long appointmentId, AppointmentRequest appointmentRequest) {
+    public ResponseEntity<Map<String, Object>> updateAppointment(Long appointmentId, AppointmentRequest appointmentRequest) {
         var appointment = getAppointment(appointmentId);
         Long patientId = appointment.getPatient().getId();
         ownershipVerifyPassed(patientId);
@@ -77,7 +77,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> cancelAppointment(Long appointmentId) throws MessagingException {
+    public ResponseEntity<Map<String, Object>> cancelAppointment(Long appointmentId) throws MessagingException {
         var appointment = getAppointment(appointmentId);
         Long patientId = appointment.getPatient().getId();
         ownershipVerifyPassed(patientId);
@@ -92,14 +92,14 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     @Override
-    public ResponseEntity<?> getAppointmentsByPatient(Long patientId) {
+    public ResponseEntity<Map<String, Object>> getAppointmentsByPatient(Long patientId) {
         getPatientFromRepository(patientId);
         var response = validateListAndGetResponse(getListOfAppointments(patientId));
         return ResponseEntity.ok(Map.of(MESSAGE, "Lista de citas médicas", APPOINTMENTS, response));
     }
 
     @Override
-    public ResponseEntity<?> getAppointmentsByMedic(Long medicId) {
+    public ResponseEntity<List<AppointmentListResponse>> getAppointmentsByMedic(Long medicId) {
         var appointments = appointmentRepository.findByMedicIdAndStatusOrderByDateAscTimeAsc(medicId, Status.CONFIRMADA);
         if(appointments.isEmpty()){
             throw new IllegalArgumentException("There are not appointments");

@@ -42,7 +42,7 @@ public class PatientServiceImpl implements IPatientService{
     private boolean sendEmail;
 
     @Override
-    public ResponseEntity<?> getAllPatients(){
+    public ResponseEntity<Map<String, List<PatientResponse>>> getAllPatients(){
         List<Patient> patients = patientRepository.findAll();
         List<PatientResponse> response = patients.stream()
                 .map(patientEntity -> modelMapper.map(patientEntity, PatientResponse.class))
@@ -55,7 +55,7 @@ public class PatientServiceImpl implements IPatientService{
     }
 
     @Override
-    public ResponseEntity<?> getPatientById(Long id){
+    public ResponseEntity<Map<String, PatientResponse>> getPatientById(Long id){
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException("Paciente no encontrado"));
         var patientDTO = modelMapper.map(patient, PatientResponse.class);
@@ -64,7 +64,7 @@ public class PatientServiceImpl implements IPatientService{
 
     @Override
     @Transactional
-    public ResponseEntity<?> createPatient(PatientRequest patientRequest) throws MessagingException {
+    public ResponseEntity<Map<String, Object>> createPatient(PatientRequest patientRequest) throws MessagingException {
         assertValidation(patientRequest);
 
         UserRequest userRequest = patientRequest.getUser();
@@ -83,7 +83,7 @@ public class PatientServiceImpl implements IPatientService{
 
     @Override
     @Transactional
-    public ResponseEntity<?> deletePatient(Long id){
+    public ResponseEntity<Map<String, String>> deletePatient(Long id){
         var patient = notNull(id);
         patientRepository.delete(patient);
         return ResponseEntity.ok(Map.of("message", "Paciente eliminado con éxito"));
