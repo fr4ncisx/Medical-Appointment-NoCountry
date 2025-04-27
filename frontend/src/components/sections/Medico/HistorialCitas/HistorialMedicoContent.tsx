@@ -7,7 +7,7 @@ export const HistorialMedicoContent = () => {
     return(
         <Box>
             <Typography variant="h5" gutterBottom color="primary" sx={{ letterSpacing: "4px"}}>
-                Citas actuales
+                Historial de citas
             </Typography>
             <CustomTableV2 headers={historial_citas_headers}>
                 <HistorialCitasRows />
