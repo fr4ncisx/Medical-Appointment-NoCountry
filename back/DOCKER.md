@@ -1,17 +1,23 @@
 ## Repositorio Docker Hub
 Aca se van a ver las estadisticas de actualizaciones de la imagen de Docker del proyecto **MedicalAppointment**
-##### Ultima versión
+
+## Version Actual
+
+Actualmente esta es la última version de la imágen de Docker
 
 [![Docker Image Version](https://img.shields.io/docker/v/dockerfrancisx/healthapp?label=Health-App&tag=latest&style=for-the-badge)](https://hub.docker.com/r/dockerfrancisx/healthapp)
 
-[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
+Estado del servidor con la versión utilizada
 
-## Actualizaciones
+[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE%20V1.25-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
+
+## Información de Actualizaciones
 
 - **SNAPSHOT** – `n/a` `PREVIEW RELEASE`
   - Las versiones SNAPSHOT pueden contener fallas.
   - No se recomienda usar en producción estas versiones.
   - Estas versiones son `Preview` son solo de prueba para desarrolladores.
+  - Si la última version aparece como SNAPSHOT quiere decir que está lista para ser usada pero teniendo en cuenta que puede tener algunos errores, solo apta para entornos de desarrollo.
 
   <br>
 
@@ -19,6 +25,9 @@ Aca se van a ver las estadisticas de actualizaciones de la imagen de Docker del 
     - Añadida integración con **Caffeine** para manejo de caché.
     - Optimizadas las operaciones con el manejo de caché: `@Cacheable`, `@CachePut`, `@CacheEvict`.
     - Se integró **Security Ownership** para mantener la seguridad de los endpoints por roles, esto quiere decir que un usuario paciente no puede acceder a los datos de otros pacientes, sino que debe mantener el mismo id para mantener la integridad de datos.
+    - Se arregló un error que no permitía que los usuarios con rol ADMIN pudieran tener acceso a obtener y editar los datos de todos los usuarios.
+    - Se optimizó el código con llamadas innecesarias a la verificación del JWT para obtener el email y rol del usuario logueado.
+
 
 <br>
 
@@ -35,24 +44,22 @@ Versiones que ya no tienen soporte y forman parte de las versiones **BETA**
 
 - **V1.0.0** ~ **V1.24**
 
----
-
 ## Configuraciones
 Para utilizar la última versión de la imagen del proyecto es requerido el **docker-compose.yml**
 
 #### Requisitos de Software
   
-  Sistema operativo compatible:
+##### Sistema operativo compatible:
 
-  **Linux:** Distribuciones como Ubuntu, Debian, Fedora, etc.
+  <u>**Linux:**</u> Distribuciones como Ubuntu, Debian, Fedora, etc.
 
-  **macOS:** Versiones de macOS 10.14 o superiores.
+  <u>**macOS:**</u> Versiones de macOS 10.14 o superiores.
 
-  **Windows:** Windows 10 (versión 1903 o superior) con **WSL2** (Windows Subsystem for Linux 2).
+  <u>**Windows:**</u> Windows 10 (versión 1903 o superior) con **WSL2** (Windows Subsystem for Linux 2).
 
-  **Docker Desktop** (para macOS y Windows)
+  <u>**Docker Desktop**</u> (para macOS y Windows)
 
-  **WSL2 (solo en Windows)**: Necesario para que Docker Desktop funcione correctamente en Windows 10/11. Configurar WSL2.
+  <u>**WSL2 (solo en Windows)**:</u> Necesario para que Docker Desktop funcione correctamente en Windows 10/11. Configurar WSL2.
 
 #### Requisitos de Hardware
 
