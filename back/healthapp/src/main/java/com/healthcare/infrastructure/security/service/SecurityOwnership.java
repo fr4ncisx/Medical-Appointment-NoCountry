@@ -37,7 +37,7 @@ public class SecurityOwnership {
         return true;
     }
 
-    private Authentication getCredentials(){
+    public Authentication getCredentials(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
             return null;
