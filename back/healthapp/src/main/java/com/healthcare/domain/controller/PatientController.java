@@ -36,7 +36,7 @@ public class PatientController {
     }
     
     @PostMapping
-    public ResponseEntity<Map<String, Object>> createPatient(@RequestBody @Valid PatientRequest patientDTO) throws MessagingException {
+    public ResponseEntity<Map<String, PatientResponse>> createPatient(@RequestBody @Valid PatientRequest patientDTO) throws MessagingException {
         return patientService.createPatient(patientDTO);
     }
 
