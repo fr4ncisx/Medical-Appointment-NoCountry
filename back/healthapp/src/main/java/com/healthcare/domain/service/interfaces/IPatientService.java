@@ -17,7 +17,7 @@ public interface IPatientService {
 
     ResponseEntity<Map<String, PatientResponse>> getPatientById(Long id);
 
-    ResponseEntity<Map<String, Object>> createPatient(PatientRequest patientDTO) throws MessagingException;
+    ResponseEntity<Map<String, PatientResponse>> createPatient(PatientRequest patientDTO) throws MessagingException;
 
     ResponseEntity<Map<String, String>> deletePatient(Long id);
 

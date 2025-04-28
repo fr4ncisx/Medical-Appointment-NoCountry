@@ -3,8 +3,13 @@ package com.healthcare.domain.service.interfaces;
 import com.healthcare.domain.dto.request.UserRequestUpdate;
 import com.healthcare.domain.dto.response.UserResponse;
 
-public interface IUserService {
-    UserResponse getUser(String email);
+import java.util.List;
+import java.util.Map;
 
-    void edit(Long id, UserRequestUpdate user);
+public interface IUserService {
+    List<UserResponse> getAll();
+
+    UserResponse getOne(String email);
+
+    Map<String, String> edit(Long id, UserRequestUpdate user);
 }
