@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    List<Appointment> findByPatientId(Long patientId);
+    List<Appointment> findByPatientIdAndStatusOrderByDateAscTimeAsc(Long patientId, Status status);
     boolean existsByMedicId(Long medicId);
     List<Appointment> findByMedicIdAndStatusOrderByDateAscTimeAsc(Long medicId, Status status);
 }
