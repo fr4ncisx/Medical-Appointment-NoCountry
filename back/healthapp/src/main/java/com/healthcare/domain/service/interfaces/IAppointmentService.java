@@ -18,5 +18,5 @@ public interface IAppointmentService {
 
     ResponseEntity<Map<String, Object>> getAppointmentsByPatient(Long patientId);
 
-    ResponseEntity<List<AppointmentListResponse>> getAppointmentsByMedic(Long medicId);
+    ResponseEntity<Map<String, List<AppointmentListResponse>>> getAppointmentsByMedic(Long medicId);
 }
