@@ -17,8 +17,13 @@ import com.healthcare.domain.service.interfaces.IAppointmentService;
 import com.healthcare.infrastructure.security.service.SecurityOwnership;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AppointmentServiceImpl implements IAppointmentService {
@@ -40,6 +46,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final ModelMapper modelMapper;
     private final MailService mailService;
     private final SecurityOwnership securityOwnership;
+    private final CacheManager cacheManager;
 
     @Value("${email.sendEmail}")
     private boolean sendEmail;
@@ -47,6 +54,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private static final String APPOINTMENT = "appointment";
     private static final String APPOINTMENTS = "appointments";
 
+    @Caching(evict = {
+            @CacheEvict(value = "appointment-patient", allEntries = true),
+            @CacheEvict(value = "appointment-medic", allEntries = true)})
     @Override
     @Transactional
     public ResponseEntity<Map<String, Object>> scheduleAppointment(Long patientId, Long medicId, AppointmentRequest appointmentRequest) throws MessagingException {
@@ -62,6 +72,26 @@ public class AppointmentServiceImpl implements IAppointmentService {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(MESSAGE, "Cita agendada correctamente", APPOINTMENT, modelMapper.map(appointment, AppointmentResponse.class)));
     }
 
+    @Cacheable(value = "appointment-patient", key = "#patientId")
+    @Override
+    public ResponseEntity<Map<String, Object>> getAppointmentsByPatient(Long patientId) {
+        getPatientFromRepository(patientId);
+        var response = validateListAndGetResponse(getListOfAppointments(patientId));
+        return ResponseEntity.ok(Map.of(APPOINTMENTS, response));
+    }
+
+    @Cacheable(value = "appointment-medic", key = "#medicId")
+    @Override
+    public ResponseEntity<Map<String, List<AppointmentListResponse>>> getAppointmentsByMedic(Long medicId) {
+        var appointments = appointmentRepository.findByMedicIdAndStatusOrderByDateAscTimeAsc(medicId, Status.CONFIRMADA);
+        if (appointments.isEmpty()) {
+            throw new IllegalArgumentException("No se encontraron citas médicas.");
+        }
+        var response = appointments.stream()
+                .map(a -> modelMapper.map(a, AppointmentListResponse.class)).toList();
+        return ResponseEntity.ok(Map.of(APPOINTMENTS, response));
+    }
+
     @Override
     @Transactional
     public ResponseEntity<Map<String, Object>> updateAppointment(Long appointmentId, AppointmentRequest appointmentRequest) {
@@ -72,9 +102,44 @@ public class AppointmentServiceImpl implements IAppointmentService {
         outOfTimeRangeValidation(appointment.getMedic().getId(), appointmentRequest.getDate(), appointmentRequest.getTime());
         modelMapper.map(appointmentRequest, appointment);
         appointmentRepository.save(appointment);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of(MESSAGE, "Cita reagendada correctamente", APPOINTMENT, modelMapper.map(appointment, AppointmentResponse.class)));
+        var response = modelMapper.map(appointment, AppointmentResponse.class);
+        putInCache(appointment, "appointment-medic", "appointment-patient");
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(MESSAGE, "Cita reagendada correctamente", APPOINTMENT, response));
     }
 
+    private void putInCache(Appointment appointment, String... cacheValues) {
+        for (String cacheKey : cacheValues) {
+            var cache = cacheManager.getCache(cacheKey);
+            if (cache == null) continue;
+
+            switch (cacheKey) {
+                case "appointment-medic":
+                    var medicAppointments = appointmentRepository.findByMedicIdAndStatusOrderByDateAscTimeAsc(
+                            appointment.getMedic().getId(), Status.CONFIRMADA);
+                    var medicResponse = medicAppointments.stream()
+                            .map(a -> modelMapper.map(a, AppointmentListResponse.class))
+                            .toList();
+                    cache.put(appointment.getMedic().getId(), ResponseEntity.ok(Map.of(APPOINTMENTS, medicResponse)));
+                    break;
+
+                case "appointment-patient":
+                    var patientAppointments = appointmentRepository.findByPatientIdAndStatusOrderByDateAscTimeAsc(
+                            appointment.getPatient().getId(), Status.CONFIRMADA);
+                    var patientResponse = patientAppointments.stream()
+                            .map(a -> modelMapper.map(a, AppointmentListResponse.class))
+                            .toList();
+                    cache.put(appointment.getPatient().getId(), ResponseEntity.ok(Map.of(APPOINTMENTS, patientResponse)));
+                    break;
+
+                default:
+                    log.warn("Unknown cache key: {}", cacheKey);
+            }
+        }
+    }
+
+    @Caching(evict = {
+            @CacheEvict(value = "appointment-patient", allEntries = true),
+            @CacheEvict(value = "appointment-medic", allEntries = true)})
     @Override
     @Transactional
     public ResponseEntity<Map<String, Object>> cancelAppointment(Long appointmentId) throws MessagingException {
@@ -91,46 +156,31 @@ public class AppointmentServiceImpl implements IAppointmentService {
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(MESSAGE, "Cita cancelada correctamente", APPOINTMENT, modelMapper.map(appointment, AppointmentResponse.class)));
     }
 
-    @Override
-    public ResponseEntity<Map<String, Object>> getAppointmentsByPatient(Long patientId) {
-        getPatientFromRepository(patientId);
-        var response = validateListAndGetResponse(getListOfAppointments(patientId));
-        return ResponseEntity.ok(Map.of(MESSAGE, "Lista de citas médicas", APPOINTMENTS, response));
-    }
-
-    @Override
-    public ResponseEntity<List<AppointmentListResponse>> getAppointmentsByMedic(Long medicId) {
-        var appointments = appointmentRepository.findByMedicIdAndStatusOrderByDateAscTimeAsc(medicId, Status.CONFIRMADA);
-        if(appointments.isEmpty()){
-            throw new IllegalArgumentException("There are not appointments");
-        }
-        var response = appointments.stream()
-                .map(a -> modelMapper.map(a, AppointmentListResponse.class))
-                .toList();
-        return ResponseEntity.ok(response);
-    }
-
     private List<Appointment> getListOfAppointments(Long patientId) {
-        return appointmentRepository.findByPatientId(patientId);
+        return appointmentRepository.findByPatientIdAndStatusOrderByDateAscTimeAsc(patientId, Status.CONFIRMADA);
     }
 
     private List<AppointmentListResponse> validateListAndGetResponse(List<Appointment> appointments) {
         if (appointments.isEmpty()) {
             throw new AppointmentNotFoundException("El paciente no tiene citas médicas registradas");
         }
-        return appointments.stream().map(a -> modelMapper.map(a, AppointmentListResponse.class)).toList();
+        return appointments.stream()
+                .map(a -> modelMapper.map(a, AppointmentListResponse.class)).toList();
     }
 
     private Medic getMedicFromRepository(Long id) {
-        return medicRepository.findById(id).orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
+        return medicRepository.findById(id)
+                .orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
     }
 
     private Patient getPatientFromRepository(Long id) {
-        return patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException("Paciente no encontrado"));
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException("Paciente no encontrado"));
     }
 
     public Appointment getAppointment(Long appointmentId) {
-        return appointmentRepository.findById(appointmentId).orElseThrow(() -> new AppointmentNotFoundException("Cita no encontrada"));
+        return appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new AppointmentNotFoundException("Cita no encontrada"));
     }
 
     public void checkIfNotConfirmed(Appointment appointment) {
@@ -144,13 +194,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
         if (medicAppointments.isEmpty()) {
             return;
         }
-        medicAppointments.stream()
-                .filter(a -> a.getTime().equals(appointmentRequest.getTime())
-                        && a.getDate().isEqual(appointmentRequest.getDate()))
-                .findAny()
-                .ifPresent(a -> {
-                    throw new InvalidDataException("Ese horario ya está asignado");
-                });
+        medicAppointments.stream().filter(a -> a.getTime().equals(appointmentRequest.getTime()) && a.getDate().isEqual(appointmentRequest.getDate())).findAny().ifPresent(a -> {
+            throw new InvalidDataException("Ese horario ya está asignado");
+        });
     }
 
     private void outOfTimeRangeValidation(Long medicId, LocalDate date, LocalTime time) {
@@ -160,7 +206,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         }
     }
 
-    private void ownershipVerifyPassed(Long patientId){
+    private void ownershipVerifyPassed(Long patientId) {
         securityOwnership.isSamePatientId(patientId);
     }
 }
