@@ -13,6 +13,11 @@ import com.healthcare.domain.service.interfaces.IScheduleService;
 import com.healthcare.domain.utils.Response;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,7 @@ public class ScheduleServiceImpl implements IScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final MedicRepository medicRepository;
     private final ModelMapper modelMapper;
+    private final CacheManager cacheManager;
 
     @Override
     @Transactional
@@ -39,14 +45,15 @@ public class ScheduleServiceImpl implements IScheduleService {
         Schedule newSchedule = new Schedule(scheduleRequest, medic);
         scheduleRepository.saveAndFlush(newSchedule);
         var response = modelMapper.map(newSchedule, ScheduleResponse.class);
+        putInCache(newSchedule, response);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
     }
 
+    @Cacheable(value = "schedule-medic", key = "#medicId")
     @Override
     public ResponseEntity<List<ScheduleResponse>> getAllSchedulesByMedicId(Long medicId) {
         Medic medic = getMedic(medicId);
-
         List<Schedule> schedules = medic.getSchedules();
 
         if (schedules.isEmpty()) {
@@ -60,6 +67,7 @@ public class ScheduleServiceImpl implements IScheduleService {
         return ResponseEntity.ok(scheduleResponses);
     }
 
+    @Cacheable(value = "one-schedule", key = "#scheduleId")
     @Override
     public ResponseEntity<ScheduleResponse> getScheduleById(Long scheduleId) {
         Schedule schedule = getSchedule(scheduleId);
@@ -69,6 +77,12 @@ public class ScheduleServiceImpl implements IScheduleService {
         return ResponseEntity.ok(scheduleResponse);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "schedule-medic", allEntries = true)
+    },
+    put = {
+            @CachePut(value = "one-schedule", key = "#scheduleId")
+    })
     @Override
     @Transactional
     public ResponseEntity<ScheduleResponse> updateSchedule(Long scheduleId, ScheduleRequest scheduleRequest) {
@@ -82,6 +96,10 @@ public class ScheduleServiceImpl implements IScheduleService {
         return ResponseEntity.ok(scheduleResponse);
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "schedule-medic", allEntries = true),
+            @CacheEvict(value = "one-schedule", allEntries = true)
+            })
     @Override
     @Transactional
     public ResponseEntity<Map<String,String>> deleteSchedule(Long scheduleId) {
@@ -131,8 +149,6 @@ public class ScheduleServiceImpl implements IScheduleService {
         }
     }
 
-
-    // TODO: Faltaria validar que al editar el horario no se superponga con los del mismo día y médico
     private void checkTakenSchedule(Schedule sch, ScheduleRequest request) {
         var requestStartTime = request.getStartTime();
         var requestEndTime = request.getEndTime();
@@ -142,6 +158,13 @@ public class ScheduleServiceImpl implements IScheduleService {
 
         if (sameDay && sameTime) {
             throw new InvalidDataException("El horario no se puede editar ya que se superpone con otro");
+        }
+    }
+
+    private void putInCache(Schedule s, ScheduleResponse response){
+        var cachedSchedule = cacheManager.getCache("one-schedule");
+        if(cachedSchedule != null){
+            cachedSchedule.put(s.getId(), ResponseEntity.ok(response));
         }
     }
 
