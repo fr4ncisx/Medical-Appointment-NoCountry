@@ -54,7 +54,7 @@ public class AppointmentController {
 
     @PreAuthorize("hasAnyRole({'ADMIN','MEDICO'})")
     @GetMapping("/{medicId}")
-    public ResponseEntity<List<AppointmentListResponse>> getAppointmentsByMedic(@PathVariable Long medicId) {
+    public ResponseEntity<Map<String, List<AppointmentListResponse>>> getAppointmentsByMedic(@PathVariable Long medicId) {
         return appointmentService.getAppointmentsByMedic(medicId);
     }
 }
