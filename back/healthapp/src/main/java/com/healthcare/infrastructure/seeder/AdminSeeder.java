@@ -27,7 +27,7 @@ public class AdminSeeder implements CommandLineRunner{
 
     @Transactional
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if(adminRepository.count() == 0){
             createAdminUser(email, password);
         }
