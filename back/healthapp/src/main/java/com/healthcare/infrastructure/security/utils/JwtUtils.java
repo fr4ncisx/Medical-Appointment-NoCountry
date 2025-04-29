@@ -97,7 +97,8 @@ public class JwtUtils {
     }
 
     private Long getId(String email, Role role) {
-        var u = userRepository.findByEmail(email).orElseThrow(() -> new InvalidDataException("Usuario no encontrado, getId"));
+        var u = userRepository.findByEmail(email)
+                .orElseThrow(() -> new InvalidDataException("Usuario no encontrado"));
         return switch (role) {
             case Role.MEDICO -> u.getMedic().getId();
             case Role.PACIENTE -> u.getPatient().getId();
