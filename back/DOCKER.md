@@ -9,7 +9,7 @@ Actualmente esta es la última version de la imágen de Docker
 
 Estado del servidor con la versión utilizada
 
-[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE%20V1.25-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
+[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE%20V1.26--SNAPSHOT-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
 
 ## Información de Actualizaciones
 
@@ -17,7 +17,7 @@ Estado del servidor con la versión utilizada
   - Las versiones SNAPSHOT pueden contener fallas.
   - No se recomienda usar en producción estas versiones.
   - Estas versiones son `Preview` son solo de prueba para desarrolladores.
-  - Si la última version aparece como SNAPSHOT quiere decir que está lista para ser usada pero teniendo en cuenta que puede tener algunos errores, solo apta para entornos de desarrollo.
+  - Si la última version aparece como `VX.XX-SNAPSHOT` quiere decir que está lista para ser usada pero teniendo en cuenta que puede tener algunos errores, solo apta para entornos de desarrollo.
 
   <br>
 
@@ -27,7 +27,8 @@ Estado del servidor con la versión utilizada
     - Se integró **Security Ownership** para mantener la seguridad de los endpoints por roles, esto quiere decir que un usuario paciente no puede acceder a los datos de otros pacientes, sino que debe mantener el mismo id para mantener la integridad de datos.
     - Se arregló un error que no permitía que los usuarios con rol ADMIN pudieran tener acceso a obtener y editar los datos de todos los usuarios.
     - Se optimizó el código con llamadas innecesarias a la verificación del JWT para obtener el email y rol del usuario logueado.
-
+    - Se actualizó el JSON de respuesta en Appointments
+    - Se actualizó al buscar los Appointments como paciente, ahora los devuelve ordenados por Fecha y Hora Ascendente y los filtra solo mostrando los confirmados
 
 <br>
 
