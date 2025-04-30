@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -23,7 +25,9 @@ public class MedicalRecordsServiceServiceImpl implements IMedicalRecordsService 
 
     private final ModelMapper modelMapper;
     private final PatientRepository patientRepository;
+    private final CacheManager cacheManager;
 
+    @Cacheable(value = "medical-records", key = "#patientId")
     @Override
     public List<MedicalRecordsReponse> retrieveRecords(Long patientId) {
         var listOfRecords = getPatient(patientId).getMedicalRecords();
@@ -38,7 +42,15 @@ public class MedicalRecordsServiceServiceImpl implements IMedicalRecordsService 
         Patient patient = getPatient(patientId);
         MedicalRecords medicalRecords = new MedicalRecords(request, patient);
         patient.getMedicalRecords().add(medicalRecords);
-        patientRepository.save(patient);
+        patient = patientRepository.save(patient);
+        saveCache(patient, patient.getMedicalRecords());
+    }
+
+    private void saveCache(Patient patient, List<MedicalRecords> medicalRecordsList){
+        Optional.ofNullable(cacheManager.getCache("medical-records"))
+                .ifPresent(c -> c.put(patient.getId(), medicalRecordsList.stream()
+                        .map(records -> modelMapper.map(records, MedicalRecordsReponse.class))
+                        .toList()));
     }
 
     private Patient getPatient(Long id) {
