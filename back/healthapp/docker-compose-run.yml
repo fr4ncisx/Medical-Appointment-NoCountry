@@ -1,0 +1,53 @@
+## FIRST COMMANDO TO RUN YOUR DOCKER-COMPOSE IF USING THE SAME FILENAME
+## docker-compose -f "docker-compose-run.yml" up
+## USE THIS COMMAND TO STOP ALL CONTAINERS, DELETE THEM AND REMOVE ALL VOLUMES
+## docker-compose -f "docker-compose-run.yml" down -v
+## IF U WANT VOLUMES TO PERSIST remove -v after down
+## docker-compose -f "docker-compose-run.yml" down
+services:
+  healthapp:
+    container_name: springboot
+    image: dockerfrancisx/healthapp:v1.25 ## USE MOST RECENT VERSION! https://hub.docker.com/r/dockerfrancisx/healthapp/tags
+    ports: 
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/healthapp?serverTimezone=America/Argentina/Buenos_Aires
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ## INSERT FROM READ BELOW MYSQL_ROOT_PASSWORD
+      HIBERNATE_DDL: update
+      LOG_SQL: false
+      FORMAT_SQL: false
+      SECRET_KEY: ## YOUR SECRET KEY TO CREATE A JWT
+      TOKEN_EXPIRATION_TIME: 900000
+      JWT_ISSUER: HealthAppIssuer
+      CLOUDINARY_URL: not_needed
+      DEPLOY_FRONTEND_IP: ## FRONTEND IP (IF RUNNING LOCAL COPY DEPLOY FRONTEND LOCALHOST)
+      DEPLOY_BACKEND_IP: ## THIS MIGHT BE LOCALHOST:8080 IF RUNNING LOCAL
+      DEPLOY_LOCALHOST_FRONTEND: http://localhost:5173
+      BACKEND_LOCALHOST: http://localhost:8080
+      ADMIN_EMAIL: ## ADMIN EMAIL FOR LOGIN WITH ROLE ADMIN
+      ADMIN_PASSWORD: ## ADMIN PASSWORD
+      SMTP_EMAIL: ## AN EMAIL FOR SENDING EMAILS
+      SMTP_PASSWORD: ## SMTP APPLICATION PASSWORD (NOT LOGIN PASSWORD)
+      ACTIVATE_SENDING_EMAIL: ## TRUE OR FALSE SENDING EMAILS
+      CACHE_EXPIRATION_TIME: 900
+      CACHE_MAX_ELEMENTS: 100
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    ports: 
+      - "3306:3306" ## ALERT! IF YOU ALREADY HAVE MYSQL INSTALLED USE THIS VALUE -> "3308:3306"
+    environment:
+      MYSQL_DATABASE: healthapp
+      MYSQL_ROOT_PASSWORD: ## PASSWORD FOR USER ROOT
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 5

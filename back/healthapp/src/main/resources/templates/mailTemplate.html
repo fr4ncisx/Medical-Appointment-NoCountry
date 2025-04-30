@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Cita Médica</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: large;
+            background-color: #f7f7f7;
+            margin: 5;
+            padding: 0;
+            color: #333;
+        }
+
+        .email-container {
+            max-width: 75%;
+            margin: 10px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #0077b5;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Contenido */
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+        }
+
+        .content .highlight {
+            font-weight: bold;
+            color: #4A90E2;
+        }
+
+        .content strong {
+            color: #444;
+        }
+
+        .footer {
+            background-color: #0077b5;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo móvil */
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+
+            .header {
+                font-size: 20px;
+            }
+
+            .footer {
+                font-size: 12px;
+            }
+
+            .cta-button {
+                width: 120px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="email-container">
+    <div class="header">
+        <div class="header">
+            <strong th:if="${status == 'CONFIRMADA'}" th:text="'Confirmación de Cita Médica'"></strong>
+            <strong th:if="${status == 'CANCELADA'}" th:text="'Aviso de Cita Médica Cancelada'"></strong>
+        </div>
+    </div>
+    <div class="content">
+        <p>Estimado/a <span th:text="|${patient.firstName} ${patient.lastName}|"></span>,</p>
+        <p th:if="${status == 'CONFIRMADA'}" th:text="'Nos complace informarle que su cita ha sido agendada con éxito. A continuación, encontrará los detalles de su cita:'"></p>
+        <p th:if="${status == 'CANCELADA'}" th:text="'Este correo tiene como propósito informarle que su cita médica ha sido cancelada. A continuación, encontrará los detalles de la cita cancelada. Si considera que esta cancelación fue un error o si desea reprogramar su cita, no dude en ponerse en contacto con nosotros a la mayor brevedad posible. Lamentamos los inconvenientes que esto pueda causar y estamos a su disposición para asistirlo en lo que necesite'"></p>
+        <p><strong>Estado de la cita:</strong>
+            <span class="highlight" th:style="'color: ' + (${status} == 'CANCELADA' ? 'red' : '#4A90E2')" th:text="${status}"></span>
+        </p>
+        <p><strong>Fecha:</strong> <span class="highlight" th:text="${appointment.date}"></span>
+        </p>
+        <p><strong>Hora:</strong> <span class="highlight" th:text="${appointment.time}"></span></p>
+        <p><strong>Médico:</strong> <span class="highlight" th:text="|Dr. ${medic.name} ${medic.lastName}|"></span>
+        </p>
+        <p>Si tiene alguna consulta o necesita reprogramar su cita, no dude en ponerse en contacto con nosotros a
+            través de este correo electrónico o llamando al <strong>(+54) 11 1234-5678</strong>.</p>
+    </div>
+    <div class="footer">
+        Gracias por confiar en nosotros.<br>
+        &copy; 2025 Health Appointment | <a
+            href="mailto:healthappointment@zohomail.com">healthappointment@zohomail.com</a>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "jwt.secret.key",
+    "type": "String",
+    "description": "Generated 256 bit hexadecimal key'"
+  },
+  {
+    "name": "jwt.expiration",
+    "type": "Integer",
+    "description": "Token expiration time, if not present default value will be 60 minutes"
+  },
+  {
+    "name": "jwt.issuer",
+    "type": "String",
+    "description": "The issuer of the JWT"
+  },
+  {
+    "name": "cloudinary.url",
+    "type": "String",
+    "description": "Cloudinary API URL"
+  },
+  {
+    "name": "cors.frontend.ip",
+    "type": "java.lang.String",
+    "description": "The url address of the frontend for CORS"
+  },
+  {
+    "name": "admin.email",
+    "type": "java.lang.String",
+    "description": "Random admin email to initialize an admin seeder"
+  },
+  {
+    "name": "admin.password",
+    "type": "java.lang.String",
+    "description": "Random password to initialize an admin seeder"
+  }
+]}

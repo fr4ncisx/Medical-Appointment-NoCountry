@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación de Registro</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fc;
+        margin: 0;
+        padding: 0;
+    }
+
+    .email-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .email-header {
+        background-color: #4CAF50;
+        padding: 20px;
+        color: #ffffff;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .email-body {
+        padding: 30px;
+        color: #333333;
+    }
+
+    .email-body h2 {
+        font-size: 20px;
+        color: #333333;
+    }
+
+    .email-body p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #666666;
+    }
+
+    .patient-info {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 4px;
+    }
+
+    .patient-info p {
+        margin: 5px 0;
+    }
+
+    .footer {
+        background-color: #f4f7fc;
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+        color: #888888;
+    }
+
+    a {
+        color: #4CAF50;
+        text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="email-container">
+  <div class="email-header">
+    Confirmación de Registro
+  </div>
+
+  <div class="email-body">
+    <h2>¡Felicidades! El registro fue exitoso.</h2>
+    <p>Estimado/a <strong th:text="|${patient.firstName} ${patient.lastName}|"></strong>,</p>
+    <p>Nos complace informarle que su registro ha sido completado con éxito en nuestro sistema.</p>
+
+    <div class="patient-info">
+      <p><strong>Detalles del paciente:</strong></p>
+      <p><strong>Nombre:</strong> <span th:text="|${patient.firstName} ${patient.lastName}|"></span></p>
+      <p><strong>Edad:</strong> <span th:text="${age}"></span></p>
+      <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+      <p><strong>Fecha de registro:</strong> <span th:text="${date}"></span></p>
+    </div>
+
+    <p>Gracias por elegir nuestros servicios. Si tiene alguna pregunta o necesita asistencia adicional, no dude en contactarnos.</p>
+
+    <p>Atentamente, <br> El equipo de Health Appointment</p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Health Appointment. Todos los derechos reservados.</p>
+  </div>
+</div>
+</body>
+</html>
