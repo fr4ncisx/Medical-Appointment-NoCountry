@@ -11,10 +11,14 @@ import com.healthcare.domain.service.interfaces.IMedicationService;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +27,8 @@ public class MedicationServiceImpl implements IMedicationService {
     private final PatientRepository patientRepository;
     private final MedicationRepository medicationRepository;
     private final ModelMapper modelMapper;
+    private final CacheManager cacheManager;
+
 
     @Transactional
     @Override
@@ -31,6 +37,7 @@ public class MedicationServiceImpl implements IMedicationService {
         var savedMeds = medicationRepository.save(new Medications(medicationsRequest, patient));
         patient.getMedications().add(savedMeds);
         patientRepository.save(patient);
+        saveCache(patient, patient.getMedications());
         return modelMapper.map(savedMeds, MedicationsResponse.class);
     }
 
@@ -41,9 +48,21 @@ public class MedicationServiceImpl implements IMedicationService {
         var meds = getMedication(medicationId);
         modelMapper.map(medicationsRequestDTO, meds);
         patient.getMedications().add(meds);
+        saveCache(patient, patient.getMedications());
         patientRepository.save(patient);
     }
 
+    private void saveCache(Patient patient, List<Medications> medicationsList){
+        var cacheName = Optional.ofNullable(cacheManager.getCache("medications"));
+        cacheName.ifPresent(cache -> {
+            var mappedMedications = medicationsList.stream()
+                    .map(m -> modelMapper.map(m, MedicationsResponse.class))
+                    .toList();
+            cache.put(patient.getId(), mappedMedications);
+        });
+    }
+
+    @CacheEvict(value = "medications", allEntries = true)
     @Transactional
     @Override
     public void delete(Long medicationId) {
@@ -51,6 +70,7 @@ public class MedicationServiceImpl implements IMedicationService {
         medicationRepository.delete(meds);
     }
 
+    @Cacheable(value = "medications", key = "#patientId")
     @Override
     public List<MedicationsResponse> getAll(Long patientId) {
         var patient = getPatient(patientId);
