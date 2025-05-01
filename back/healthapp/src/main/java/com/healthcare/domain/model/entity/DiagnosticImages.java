@@ -20,5 +20,5 @@ public class DiagnosticImages {
     @JoinColumn(name = "patient_id")
     private Patient patient;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "diagnosticImages")
-    private List<ImagesDx> images;
+    private List<ImagesDiagnostic> images;
 }

@@ -1,24 +1,24 @@
 package com.healthcare.domain.model.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.DayOfWeek;
-
-@Data
 @Entity
+@Table(name = "images_dx")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Days {
+@Data
+public class ImagesDiagnostic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DayOfWeek dayOfWeek;
+    private LocalDate date;
+    private String url;
     @ManyToOne
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private Schedule schedule;
+    @JoinColumn(name = "diagnostic_id")
+    DiagnosticImages diagnosticImages;
 }
