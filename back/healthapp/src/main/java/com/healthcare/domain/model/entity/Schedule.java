@@ -38,11 +38,4 @@ public class Schedule {
         this.endTime = scheduleRequest.getEndTime();
         this.medic = medic;
     }
-
-    public Schedule(ScheduleRequest scheduleRequest) {
-        this.startDate = scheduleRequest.getStartDate();
-        this.endDate = scheduleRequest.getEndDate();
-        this.startTime = scheduleRequest.getStartTime();
-        this.endTime = scheduleRequest.getEndTime();
-    }
 }
