@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,6 +30,8 @@ public class User {
     private Medic medic;
     @OneToOne(mappedBy = "user")
     private Patient patient;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Notification> notifications;
 
     public User(UserRequest userRequest,String encodedPassword, Role role) {
         this.email = userRequest.getEmail();
