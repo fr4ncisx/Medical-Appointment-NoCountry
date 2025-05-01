@@ -8,11 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "dx_images")
+@Table(name = "images_dx")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ImagesDx {
+public class ImagesDiagnostic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
