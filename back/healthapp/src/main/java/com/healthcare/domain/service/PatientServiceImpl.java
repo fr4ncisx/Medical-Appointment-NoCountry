@@ -84,7 +84,7 @@ public class PatientServiceImpl implements IPatientService{
     @Override
     @Transactional
     public ResponseEntity<?> deletePatient(Long id){
-        var patient = notNull(id);
+        var patient = getPatient(id);
         patientRepository.delete(patient);
         return ResponseEntity.ok(Map.of("message", "Paciente eliminado con éxito"));
     }
@@ -92,12 +92,12 @@ public class PatientServiceImpl implements IPatientService{
     @Override
     @Transactional
     public void edit(Long id, PatientRequestUpdate patientRequest){
-        var patient = notNull(id);
+        var patient = getPatient(id);
         modelMapper.map(patientRequest, patient);
         patientRepository.save(patient);
     }
 
-    private Patient notNull(Long id){
+    private Patient getPatient(Long id){
         return patientRepository.findById(id)
                 .orElseThrow(() -> new PatientNotFoundException("Paciente no encontrado"));
     }

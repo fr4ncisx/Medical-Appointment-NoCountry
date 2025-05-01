@@ -40,6 +40,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final ModelMapper modelMapper;
     private final MailService mailService;
     private final NotificationService notificationService;
+    private final NotificationListener notificationListener;
 
     @Value("${email.sendEmail}")
     private boolean sendEmail;
@@ -56,6 +57,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         outOfTimeRangeValidation(medicId, appointmentRequest.getDate(), appointmentRequest.getTime());
         Appointment appointment = new Appointment(appointmentRequest, medic, patient);
         //appointmentRepository.save(appointment);
+        notificationListener.sendMessageToSuscribe(new RabbitRequest(medic.getUser().getId(), "New appointment arrived!"));
         notificationService.sendNotification(new RabbitRequest(medic.getUser().getId(), "New appointment arrived!"));
         if (sendEmail) {
             mailService.sendMail(patient.getUser().getEmail(), "Cita Médica: Confirmación", appointment);

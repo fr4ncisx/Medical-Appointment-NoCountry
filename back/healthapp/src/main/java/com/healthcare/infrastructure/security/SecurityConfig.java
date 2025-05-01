@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(httpRequest -> {
                     httpRequest.requestMatchers(SecurityEndpoints.adminEndpoints()).hasRole(ROLE_ADMIN);
                     httpRequest.requestMatchers(SecurityEndpoints.publicEndpoints()).permitAll();
-                    httpRequest.requestMatchers("/ws/**").permitAll(); // THIS IS ONLY FOR TESTING
+                    httpRequest.requestMatchers("/ws/**","/socket.io/**").permitAll(); // THIS IS ONLY FOR TESTING
                     httpRequest.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session
