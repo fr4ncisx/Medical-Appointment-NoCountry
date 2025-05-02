@@ -20,4 +20,5 @@ public class MedicRequestUpdate{
     @NotNull private Gender gender;
     @NotNull private Speciality speciality;
     @NotNull @NotBlank private String phone;
+    @NotNull private ImageRequest image;
 }

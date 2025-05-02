@@ -25,6 +25,7 @@ public class MedicRequest{
     @NotNull private Gender gender;
     @NotNull private Speciality speciality;
     @NotNull @NotBlank private String phone;
+    @NotNull @Valid private ImageRequest image;
     @JsonProperty("user")
-    @NotNull @Valid UserRequest user;
+    @NotNull @Valid private UserRequest user;
 }
