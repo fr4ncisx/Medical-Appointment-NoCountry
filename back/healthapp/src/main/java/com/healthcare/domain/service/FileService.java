@@ -2,10 +2,7 @@ package com.healthcare.domain.service;
 
 import com.healthcare.domain.dto.response.FilesResponse;
 import com.healthcare.domain.dto.response.InvalidFilesResponse;
-import com.healthcare.domain.exceptions.FileNotFoundException;
-import com.healthcare.domain.exceptions.FileUnableToUploadException;
-import com.healthcare.domain.exceptions.IOFileException;
-import com.healthcare.domain.exceptions.UnreadableException;
+import com.healthcare.domain.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
@@ -52,8 +49,18 @@ public class FileService {
         return filesList;
     }
 
+    public File verifyOneFile(MultipartFile multipartFile) {
+        checkFileNotNull(multipartFile);
+        var compatibleFile = validateExtensions(Objects.requireNonNull(multipartFile.getContentType()));
+        if(compatibleFile) {
+            return convertToFile(multipartFile);
+        }
+        throw new NotCompatibleFileEx("File is not compatible as an image");
+    }
+
     /**
      * checks if the files are the same no prevent uploading issues
+     *
      * @param files OneOrMany MultipartFiles
      */
     private void checkIfFilesAreRepeated(MultipartFile... files) {
@@ -73,48 +80,49 @@ public class FileService {
             }
         }
     }
-/**
- * Converts MultipartFile to File
- *
- * @param multi A MultipartFile
- * @return converted Multipart to File
- */
-private File convertToFile(MultipartFile multi) {
-    File f = new File(Objects.requireNonNull(multi.getOriginalFilename()));
-    try {
-        FileCopyUtils.copy(multi.getBytes(), f);
-    } catch (IOException e) {
-        throw new IOFileException(e.getMessage());
-    }
-    return f;
-}
 
-/**
- * Checks if file is null or length zero
- *
- * @param file VarArgs of MultipartFiles, could be 1 or many
- */
-private void checkFileNotNull(MultipartFile... file) {
-    if (file == null || file.length == 0)
-        throw new FileNotFoundException("Unable to upload file, currently file is null");
-}
-
-/**
- * Checks if the extension is an image compatible
- *
- * @param fileType fileType from contentType of every MultiPartFile
- * @return {@code true} is a valid image
- * <br>
- * {@code false} if is not a compatible image
- */
-private boolean validateExtensions(String fileType) {
-    switch (fileType.toLowerCase()) {
-        case "image/jpeg", "image/jpg", "image/tiff", "image/bmp", "image/gif", "image/png", "image/webp" -> {
-            return true;
+    /**
+     * Converts MultipartFile to File
+     *
+     * @param multi A MultipartFile
+     * @return converted Multipart to File
+     */
+    private File convertToFile(MultipartFile multi) {
+        File f = new File(Objects.requireNonNull(multi.getOriginalFilename()));
+        try {
+            FileCopyUtils.copy(multi.getBytes(), f);
+        } catch (IOException e) {
+            throw new IOFileException(e.getMessage());
         }
-        default -> {
-            return false;
+        return f;
+    }
+
+    /**
+     * Checks if file is null or length zero
+     *
+     * @param file VarArgs of MultipartFiles, could be 1 or many
+     */
+    private void checkFileNotNull(MultipartFile... file) {
+        if (file == null || file.length == 0)
+            throw new FileNotFoundException("Unable to upload file, currently file is null");
+    }
+
+    /**
+     * Checks if the extension is an image compatible
+     *
+     * @param fileType fileType from contentType of every MultiPartFile
+     * @return {@code true} is a valid image
+     * <br>
+     * {@code false} if is not a compatible image
+     */
+    private boolean validateExtensions(String fileType) {
+        switch (fileType.toLowerCase()) {
+            case "image/jpeg", "image/jpg", "image/tiff", "image/bmp", "image/gif", "image/png", "image/webp" -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
         }
     }
-}
 }
