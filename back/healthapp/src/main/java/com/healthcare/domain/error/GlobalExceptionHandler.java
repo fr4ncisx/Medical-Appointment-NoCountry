@@ -47,6 +47,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CloudinaryException.class)
+    public ResponseEntity<Map<String, String>> cloudinaryGenericEx(CloudinaryException ex) {
+        return new ResponseEntity<>(Map.of(STATUS_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotCompatibleFileEx.class)
+    public ResponseEntity<Map<String, String>> fileNotAllowed(NotCompatibleFileEx ex) {
+        return new ResponseEntity<>(Map.of(STATUS_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(UnreadableException.class)
     public ResponseEntity<Map<String, String>> unreadableEx(UnreadableException ex) {
         return new ResponseEntity<>(Map.of(STATUS_ERROR, ex.getMessage()), HttpStatus.BAD_REQUEST);
