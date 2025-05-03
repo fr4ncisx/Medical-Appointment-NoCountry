@@ -20,6 +20,7 @@ import com.healthcare.domain.repository.UserRepository;
 import com.healthcare.domain.service.interfaces.IMedicService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MedicServiceImpl implements IMedicService {
@@ -46,6 +48,7 @@ public class MedicServiceImpl implements IMedicService {
     private final ImageRepository imageRepository;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final CloudinaryService cloudinaryService;
 
     @Cacheable(value = "medics", key = "#speciality + '-' + #gender + '-' + #state")
     @Override
@@ -127,8 +130,10 @@ public class MedicServiceImpl implements IMedicService {
         if (appointmentRepository.existsByMedicId(id)) {
             throw new MedicDeletionException("No se puede eliminar el Médico porque tiene citas asociadas");
         }
-
+        String publicId = cloudinaryService.convertUrlToPublicId(medic.getImage().getUrl());
         medicRepository.delete(medic);
+        var response = cloudinaryService.deleteFromCloudinary(publicId);
+        log.warn("Deleted image status: {}", response.getResult());
         return ResponseEntity.ok(Map.of("message", "Médico eliminado con éxito"));
     }
 
@@ -150,7 +155,7 @@ public class MedicServiceImpl implements IMedicService {
 
         Image image = modelMapper.map(imageRequest, Image.class);
         medic.setImage(image);
-        modelMapper.map(medicRequest, Medic.class);
+        modelMapper.map(medicRequest, medic);
         medicRepository.save(medic);
     }
 }
