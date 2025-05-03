@@ -59,7 +59,8 @@ public class FileService {
     }
 
     /**
-     * checks if the files are the same no prevent uploading issues
+     * checks if the files are the same to prevent uploading issues
+     * using bubble sort algorithm
      *
      * @param files OneOrMany MultipartFiles
      */
