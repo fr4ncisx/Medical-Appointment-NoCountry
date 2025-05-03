@@ -2,12 +2,13 @@ package com.healthcare.domain.controller;
 
 import com.healthcare.domain.dto.response.CloudinaryResponse;
 import com.healthcare.domain.service.ImageService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,14 +24,23 @@ public class CloudinaryController {
         return imageService.upload(file);
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\"result\":\"ok\"}"))),
+            @ApiResponse(responseCode = "400", description = "Solicitud incorrecta", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = "{\"ERROR\":\"public_id: XXXXXXXXXX was not found in Cloudinary\"}")))
+    })
     @PostMapping("/delete")
-    public void deleteImage(String publicId) {
-        imageService.delete(publicId);
+    public ResponseEntity<CloudinaryResponse> deleteImage(@RequestParam String publicId) {
+        return imageService.delete(publicId);
     }
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operación exitosa", content = @Content(mediaType = "application/json", examples = @ExampleObject(value = """
+                    {
+                    \t"url": "https://res.cloudinary.com/dnf68vq7m/image/upload/v1746233510/healthapp/file-sample.jpg"
+                    }""")))})
     @PostMapping("/edit")
-    public void replaceImage(@RequestPart MultipartFile file, String publicId) {
-        imageService.edit(file, publicId);
+    public ResponseEntity<CloudinaryResponse> replaceImage(@RequestPart MultipartFile file, @RequestParam String publicId) {
+        return imageService.edit(file, publicId);
     }
 
 }
