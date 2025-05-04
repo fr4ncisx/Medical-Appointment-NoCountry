@@ -85,8 +85,7 @@ public class MedicServiceImpl implements IMedicService {
     @Cacheable(value="medic", key= "#id")
     @Override
     public ResponseEntity<Map<String, MedicResponse>> getMedicById(Long id) {
-        Medic medic = medicRepository.findById(id)
-                .orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
+        Medic medic = getMedic(id);
         MedicResponse dto = modelMapper.map(medic, MedicResponse.class);
         return ResponseEntity.ok(Map.of("medic", dto));
     }
@@ -124,8 +123,7 @@ public class MedicServiceImpl implements IMedicService {
     @Override
     @Transactional
     public ResponseEntity<Map<String, String>> deleteMedic(Long id) {
-        Medic medic = medicRepository.findById(id)
-                .orElseThrow(() -> new MedicNotFoundException("Médico no encontrado"));
+        Medic medic = getMedic(id);
 
         if (appointmentRepository.existsByMedicId(id)) {
             throw new MedicDeletionException("No se puede eliminar el Médico porque tiene citas asociadas");
@@ -145,17 +143,21 @@ public class MedicServiceImpl implements IMedicService {
     @Transactional
     @Override
     public void edit(Long id, MedicRequestUpdate medicRequest) {
-        var medic = medicRepository.findById(id)
-                .orElseThrow(() -> new NotFoundInDatabaseException("No se encontró el médico"));
-        Optional.ofNullable(medic.getImage())
-                .ifPresent(imageRepository::delete);
-
-        var imageRequest = medicRequest.getImage();
-        imageRequest.setDate(LocalDate.now());
-
-        Image image = modelMapper.map(imageRequest, Image.class);
-        medic.setImage(image);
+        var medic = getMedic(id);
+        var image = Optional.ofNullable(medic.getImage());
+        image.ifPresent(i -> {
+            var imageRequest = medicRequest.getImage();
+            imageRequest.setDate(LocalDate.now());
+            modelMapper.map(imageRequest, image);
+            imageRepository.save(i);
+            medic.setImage(i);
+        });
         modelMapper.map(medicRequest, medic);
         medicRepository.save(medic);
+    }
+
+    private Medic getMedic(Long id){
+        return medicRepository.findById(id)
+                .orElseThrow(() -> new MedicNotFoundException("No se encontró el médico"));
     }
 }
