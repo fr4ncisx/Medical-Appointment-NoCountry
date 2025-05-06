@@ -1,10 +1,10 @@
 import { Grid2, IconButton, useMediaQuery } from "@mui/material";
 import { SelectorEspecialidad } from "./SelectorEspecialidad";
-import { BarraBusqueda } from "./BarraBusqueda";
 import { FiltrosSelected } from "./FiltrosSelected";
 import { GeneroRadioButton } from "./GeneroRadioButton";
 import { useState } from "react";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { StateFilter } from "./StateFilter";
 
 export const MedicosFilters = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -13,7 +13,7 @@ export const MedicosFilters = () => {
     <>
       {isMobile && (
         <IconButton onClick={() => setOpenFilterMenu(!openFilterMenu)}>
-          <FilterAltIcon color="primary"/>
+          <FilterAltIcon color="primary" />
         </IconButton>
       )}
       <Grid2
@@ -24,10 +24,10 @@ export const MedicosFilters = () => {
         overflow={"hidden"}
         height={isMobile && !openFilterMenu ? "0px" : "min-content"}
       >
-        <BarraBusqueda />
         <FiltrosSelected />
         <GeneroRadioButton />
         <SelectorEspecialidad />
+        <StateFilter />
       </Grid2>
     </>
   );

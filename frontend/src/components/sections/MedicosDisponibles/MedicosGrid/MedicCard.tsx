@@ -21,7 +21,6 @@ export const MedicCard = ({ doctor }: DoctorCardProps) => {
       sx={{
         backgroundColor: "#fff",
         textAlign: "center",
-        border: "1px solid #c1c1c1",
         padding: "20px 5px",
         cursor: "pointer",
         height: "250px",
