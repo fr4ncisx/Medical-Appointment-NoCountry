@@ -21,7 +21,7 @@ Estado del servidor con la versión utilizada
 
   <br>
 
-- **V1.26** – `TBA` `NOT RELEASED YET`
+- **V1.26** – `2025-05-XX` `FINAL`
     - Añadida integración con **Caffeine** para manejo de caché.
     - Optimizadas las operaciones con el manejo de caché: `@Cacheable`, `@CachePut`, `@CacheEvict`.
     - Se integró **Security Ownership** para mantener la seguridad de los endpoints por roles, esto quiere decir que un usuario paciente no puede acceder a los datos de otros pacientes, sino que debe mantener el mismo id para mantener la integridad de datos.
@@ -29,6 +29,9 @@ Estado del servidor con la versión utilizada
     - Se optimizó el código con llamadas innecesarias a la verificación del JWT para obtener el email y rol del usuario logueado.
     - Se actualizó el JSON de respuesta en Appointments
     - Se actualizó al buscar los Appointments como paciente, ahora los devuelve ordenados por Fecha y Hora Ascendente y los filtra solo mostrando los confirmados
+    - Se implementó la carga de imagenes de Cloudinary en la ruta `{/api/v1/cloudinary}`
+    - Se implementó la lógica de negocio de Diagnostico por imagenes para cargar las imagenes de diagnostico de los pacientes.
+    - Se refactorizó algunas secciones del proyecto para ahorrar recursos.
 
 <br>
 

@@ -34,12 +34,13 @@ public class Medic {
     private List<Appointment> appointment;
     @OneToOne(cascade = CascadeType.ALL) @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne @JoinColumn(name = "image_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
     private Image image;
     @OneToMany(mappedBy = "medic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Schedule> schedules;
     
-    public Medic(MedicRequest medic, User user) {
+    public Medic(MedicRequest medic, User user, Image image) {
         this.name = medic.getName();
         this.lastName = medic.getLastname();
         this.description = medic.getDescription();
@@ -48,6 +49,7 @@ public class Medic {
         this.gender = medic.getGender();
         this.speciality = medic.getSpeciality();
         this.phone = medic.getPhone();
+        this.image = image;
         this.user = user;
     }
 }
