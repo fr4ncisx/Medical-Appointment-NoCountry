@@ -1,6 +1,6 @@
 package com.healthcare.domain.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class ImagesDiagnostic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate date;
+    private LocalDateTime date;
     private String url;
     @ManyToOne
     @JoinColumn(name = "diagnostic_id")
