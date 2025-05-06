@@ -1,33 +1,23 @@
-import { MedicCard } from "../MedicCard";
-import { MedicoData } from "@tipos/backendTypes";
-import { CustomError } from "@tipos/types";
-import { useUserStore } from "@store/user.store";
-import { useState, useEffect } from "react";
-import { getMedicos } from "@services/medic/getMedicos";
+import { MedicCard } from "./MedicCard";
 import { Grid2 } from "@mui/material";
 import { GridLoading } from "./GridLoading";
 import { GridError } from "./GridError";
+import { useMedicosDisponibles } from "@context/medicos_disponibles.context";
 
 export const MedicosGrid = () => {
-  const [medicos, setMedicos] = useState<MedicoData[]>([]);
-  const [error, setError] = useState<CustomError>(null);
-  const [loading, setLoading] = useState(false);
-  const token = useUserStore((state) => state.getToken)();
-
-  useEffect(() => {
-    getMedicos({ token, setDataRows: setMedicos, setLoading, setError });
-  }, []);
+  const { medicos, loading, error } = useMedicosDisponibles();
 
   if (loading) {
     return <GridLoading />;
   }
 
   if (error) {
-    return <GridError description={error.description} />;
+    return <GridError description={error.message} />;
   }
+  
   return (
     <Grid2 container spacing={1} columns={{ xs: 12, sm: 12, md: 12 }}>
-      {medicos.map((doctor) => (
+      {medicos && medicos.map((doctor) => (
         <MedicCard key={doctor.id} doctor={doctor} />
       ))}
     </Grid2>

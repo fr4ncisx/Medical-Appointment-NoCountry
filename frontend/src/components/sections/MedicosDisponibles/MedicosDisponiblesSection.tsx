@@ -4,6 +4,7 @@ import { MedicosFilters } from "./MedicosFilters/MedicosFilters";
 import { useModalStore } from "@store/modal.store";
 import CustomModal from "@ui/CustomModal/CustomModal";
 import ModalMenu from "../Welcome/ModalMenu/ModalMenu";
+import { MedicosDisponiblesProvider } from "@context/medicos_disponibles.provider";
 
 export const MedicosDisponiblesSection = () => {
   const showModal = useModalStore((state) => state.modalData.showModal);
@@ -25,10 +26,12 @@ export const MedicosDisponiblesSection = () => {
         </Typography>
       </Box>
       <Grid2 container spacing={1} columns={{ xs: 12, sm: 12, md: 12 }}>
-        <MedicosFilters />
-        <Grid2 size={{ xs: 12, sm: 8, md: 9 }}>
-          <MedicosGrid />
-        </Grid2>
+        <MedicosDisponiblesProvider>
+          <MedicosFilters />
+          <Grid2 size={{ xs: 12, sm: 8, md: 9 }}>
+            <MedicosGrid />
+          </Grid2>
+        </MedicosDisponiblesProvider>
       </Grid2>
       {showModal && (
         <CustomModal>
