@@ -16,6 +16,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,6 +46,7 @@ public class DiagnosticImagesServiceImpl implements IDiagnosticImagesService {
     }
 
 
+    @Transactional
     @CacheEvict(value = "diagnostic-cache", key = "'patientId:' + #patientId")
     @Override
     public ResponseEntity<DiagnosticResponse> create(Long patientId, DiagnosticRequest diagnosticRequest) {
@@ -63,6 +65,7 @@ public class DiagnosticImagesServiceImpl implements IDiagnosticImagesService {
         return ResponseEntity.ok(response);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<DiagnosticResponse> update(Long id, DiagnosticRequest diagnosticRequest) {
         var diagnostic = getOneDiagnostic(id).getFirst();
@@ -84,6 +87,7 @@ public class DiagnosticImagesServiceImpl implements IDiagnosticImagesService {
         return ResponseEntity.ok(convertValue(savedDiagnostic, DiagnosticResponse.class));
     }
 
+    @Transactional
     @Override
     public ResponseEntity<Map<String, String>> delete(Long id) {
         var diagnostic = getOneDiagnostic(id).stream()
