@@ -8,7 +8,7 @@ import com.healthcare.domain.model.enums.Role;
 import com.healthcare.domain.repository.UserRepository;
 import com.healthcare.domain.service.interfaces.IUserService;
 import com.healthcare.domain.utils.Response;
-import com.healthcare.infrastructure.security.service.SecurityOwnership;
+import com.healthcare.infrastructure.security.utils.SecurityOwnership;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
@@ -49,12 +49,6 @@ public class UserServiceImpl implements IUserService {
         return getAllusers();
     }
 
-    // As this cache is not being used it will be disabled
-    // only edits password and it only shows details of users not password
-    /*@Caching(evict = {
-            @CacheEvict(value = "users", allEntries = true),
-            @CacheEvict(value = "user", key = "#id")
-    })*/
     @Transactional
     @Override
     public Map<String, String> edit(Long id, UserRequestUpdate userRequest) {
