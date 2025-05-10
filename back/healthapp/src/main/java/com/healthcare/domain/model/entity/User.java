@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Table(name = "users")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +36,9 @@ public class User {
         this.role = role;
     }
 
+    public User(String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 }
