@@ -1,14 +1,17 @@
-import { Box, Skeleton, SkeletonOwnProps } from "@mui/material";
+import { Box, Grid2, Skeleton, SkeletonOwnProps } from "@mui/material";
 
 const SKELETON_COUNT = 9;
-const SKELETON_PROPS: SkeletonOwnProps = { sx: { backgroundColor: "#d9d9d9" }, variant: "rounded", width: 250, height: 270 };
+const SKELETON_PROPS: SkeletonOwnProps = { 
+    sx: { backgroundColor: "#d9d9d9", width: '250px', height: "250px", }, 
+    variant: "rounded"
+ };
 
 export const GridLoading = () => {
     return (
-        <Box display="grid" gap="0.5rem" gridTemplateColumns="repeat(auto-fill, minmax(200px, 1fr))">
+        <Grid2 container spacing={1} columns={{ xs: 12, sm: 12, md: 12 }}>
             {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
                 <Skeleton key={index} {...SKELETON_PROPS} />
             ))}
-        </Box>
+        </Grid2>
     );
 };
