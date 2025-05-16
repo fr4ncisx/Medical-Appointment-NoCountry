@@ -40,6 +40,7 @@ export const MedicosDisponiblesProvider = ({
         genderFilter,
         stateFilter
       ),
+      retry: 1
   });
 
   const handleCleanFilters = () => {
