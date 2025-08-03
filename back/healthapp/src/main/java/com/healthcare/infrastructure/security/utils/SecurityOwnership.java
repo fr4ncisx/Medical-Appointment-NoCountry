@@ -1,4 +1,4 @@
-package com.healthcare.infrastructure.security.service;
+package com.healthcare.infrastructure.security.utils;
 
 import com.healthcare.domain.exceptions.InvalidCredentialsException;
 import com.healthcare.domain.model.enums.Role;

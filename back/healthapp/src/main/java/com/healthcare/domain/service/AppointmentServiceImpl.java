@@ -14,7 +14,7 @@ import com.healthcare.domain.repository.PatientRepository;
 import com.healthcare.domain.repository.ScheduleRepository;
 import com.healthcare.domain.service.interfaces.IAppointmentService;
 
-import com.healthcare.infrastructure.security.service.SecurityOwnership;
+import com.healthcare.infrastructure.security.utils.SecurityOwnership;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
