@@ -4,16 +4,15 @@ import com.healthcare.domain.dto.request.MedicRequest;
 import com.healthcare.domain.model.enums.Gender;
 import com.healthcare.domain.model.enums.Speciality;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Medic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
