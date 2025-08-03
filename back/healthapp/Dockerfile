@@ -14,4 +14,4 @@ COPY --from=builder /workspace/target/*-SNAPSHOT.jar app.jar
 USER nonroot:nonroot
 EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s CMD wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"'
-ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75","-XX:+UseZGC","-jar","/app/app.jar"]
+ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75","-XX:+UseG1GC","-jar","/app/app.jar"]
