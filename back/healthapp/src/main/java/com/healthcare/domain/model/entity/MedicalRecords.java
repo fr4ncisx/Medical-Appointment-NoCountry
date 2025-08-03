@@ -1,9 +1,7 @@
 package com.healthcare.domain.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -13,7 +11,8 @@ import com.healthcare.domain.dto.request.MedicalRecordsRequest;
 @Table(name = "medical_records")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class MedicalRecords {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

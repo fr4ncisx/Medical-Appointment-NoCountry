@@ -1,9 +1,7 @@
 package com.healthcare.domain.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,7 +9,8 @@ import java.util.List;
 @Table(name = "diagnostic_images")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class DiagnosticImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

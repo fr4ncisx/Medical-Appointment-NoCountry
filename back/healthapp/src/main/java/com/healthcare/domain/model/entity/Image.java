@@ -3,14 +3,13 @@ package com.healthcare.domain.model.entity;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Image {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

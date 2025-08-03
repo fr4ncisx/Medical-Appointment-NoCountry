@@ -3,10 +3,7 @@ package com.healthcare.domain.model.entity;
 import com.healthcare.domain.dto.request.AppointmentRequest;
 import com.healthcare.domain.model.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +11,8 @@ import java.time.LocalTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Appointment {
     @Id

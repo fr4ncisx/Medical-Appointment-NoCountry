@@ -2,16 +2,15 @@ package com.healthcare.domain.model.entity;
 
 import com.healthcare.domain.dto.request.MedicationsRequestDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Medications {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

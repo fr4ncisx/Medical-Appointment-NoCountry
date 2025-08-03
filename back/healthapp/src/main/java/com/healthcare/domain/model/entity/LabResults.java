@@ -2,9 +2,7 @@ package com.healthcare.domain.model.entity;
 
 import com.healthcare.domain.dto.request.LabResultsRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -12,7 +10,8 @@ import java.time.LocalDate;
 @Table(name = "lab_results")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class LabResults {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
