@@ -9,7 +9,7 @@ Actualmente esta es la última version de la imágen de Docker
 
 Estado del servidor con la versión utilizada
 
-[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE%20V1.26--SNAPSHOT-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
+[![Deploy](https://img.shields.io/badge/SWAGGER%20Deploy-ONLINE%20V1.27--b-green?style=for-the-badge)](https://healthapplication.koyeb.app/swagger-ui.html)
 
 ## Información de Actualizaciones
 
@@ -21,7 +21,14 @@ Estado del servidor con la versión utilizada
 
   <br>
 
-- **V1.26** – `2025-05-XX` `FINAL`
+ - **V1.27b** – `2025-08-03` `BETA`
+    - Se añadió uso de virtual threads
+    - Se añadió compresión de JSON > 2KB
+    - Se hicieron unas mejoras pequeñas mejoras en las entidades
+    - Se actualizó la última versión de Spring-Boot y otras dependencias
+    - Se optimizó el Dockerfile reduciendo considerablemente su tamaño en un 59,7%
+
+- **V1.26** – `2025-05-01` `PREVIEW`
     - Añadida integración con **Caffeine** para manejo de caché.
     - Optimizadas las operaciones con el manejo de caché: `@Cacheable`, `@CachePut`, `@CacheEvict`.
     - Se integró **Security Ownership** para mantener la seguridad de los endpoints por roles, esto quiere decir que un usuario paciente no puede acceder a los datos de otros pacientes, sino que debe mantener el mismo id para mantener la integridad de datos.
