@@ -1,5 +1,6 @@
 package com.healthcare.domain.service;
 
+import com.healthcare.domain.configuration.props.EmailProperties;
 import com.healthcare.domain.dto.request.PatientRequest;
 import com.healthcare.domain.dto.request.PatientRequestUpdate;
 import com.healthcare.domain.dto.request.UserRequest;
@@ -17,7 +18,6 @@ import com.healthcare.domain.service.interfaces.IPatientService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -43,9 +43,10 @@ public class PatientServiceImpl implements IPatientService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailService mailService;
     private final CacheManager cacheManager;
+    private final EmailProperties emailProps;
 
-    @Value("${email.sendEmail}")
-    private boolean sendEmail;
+//    @Value("${email.sendEmail}")
+//    private boolean sendEmail;
 
     @Cacheable("all-patients")
     @Override
@@ -145,7 +146,7 @@ public class PatientServiceImpl implements IPatientService {
     }
 
     private void sendEmailAfterRegister(Patient p) throws MessagingException {
-        if (sendEmail) {
+        if (emailProps.isSendEmail()) {
             String email = p.getUser().getEmail();
             mailService.sendMailRegister(email, "Confirmación de usuario registrado", p);
         }
