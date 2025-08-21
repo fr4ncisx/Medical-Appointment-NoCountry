@@ -1,5 +1,7 @@
 package com.healthcare.domain.configuration;
 
+import com.healthcare.domain.configuration.props.EmailProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,14 +10,17 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
+@RequiredArgsConstructor
 @Configuration
 public class JavaMailConfig {
 
-    @Value("${email.username}")
-    private String email;
+    private final EmailProperties emailProps;
 
-    @Value("${email.password}")
-    private String smtpPassword;
+//    @Value("${email.username}")
+//    private String email;
+//
+//    @Value("${email.password}")
+//    private String smtpPassword;
 
     @Bean
     public JavaMailSender getJavaMailSender() {
@@ -23,8 +28,8 @@ public class JavaMailConfig {
         javaMail.setHost("smtp.zoho.com");
         javaMail.setPort(587);
 
-        javaMail.setUsername(email);
-        javaMail.setPassword(smtpPassword);
+        javaMail.setUsername(emailProps.getUsername());
+        javaMail.setPassword(emailProps.getPassword());
 
         Properties props = javaMail.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

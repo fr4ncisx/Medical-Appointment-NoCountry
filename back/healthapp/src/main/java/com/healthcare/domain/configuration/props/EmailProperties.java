@@ -1,11 +1,11 @@
 package com.healthcare.domain.configuration.props;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
+@Getter
 @Configuration
-@PropertySource("classpath:email.properties")
 @ConfigurationProperties(prefix = "email")
 public class EmailProperties {
     @SuppressWarnings("unused")

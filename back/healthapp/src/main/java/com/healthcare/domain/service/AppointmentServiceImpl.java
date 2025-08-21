@@ -1,5 +1,6 @@
 package com.healthcare.domain.service;
 
+import com.healthcare.domain.configuration.props.EmailProperties;
 import com.healthcare.domain.dto.request.AppointmentRequest;
 import com.healthcare.domain.dto.response.AppointmentListResponse;
 import com.healthcare.domain.dto.response.AppointmentResponse;
@@ -19,7 +20,6 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -47,9 +47,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private final MailService mailService;
     private final SecurityOwnership securityOwnership;
     private final CacheManager cacheManager;
+    private final EmailProperties emailProps;
 
-    @Value("${email.sendEmail}")
-    private boolean sendEmail;
+//    @Value("${email.sendEmail}")
+//    private boolean sendEmail;
     private static final String MESSAGE = "message";
     private static final String APPOINTMENT = "appointment";
     private static final String APPOINTMENTS = "appointments";
@@ -66,7 +67,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         outOfTimeRangeValidation(medicId, appointmentRequest.getDate(), appointmentRequest.getTime());
         Appointment appointment = new Appointment(appointmentRequest, medic, patient);
         appointmentRepository.save(appointment);
-        if (sendEmail) {
+        if (emailProps.isSendEmail()) {
             mailService.sendMail(patient.getUser().getEmail(), "Cita Médica: Confirmación", appointment);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(MESSAGE, "Cita agendada correctamente", APPOINTMENT, modelMapper.map(appointment, AppointmentResponse.class)));
@@ -150,7 +151,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         appointment.setStatus(Status.CANCELADA);
         appointmentRepository.save(appointment);
         var patient = appointment.getPatient();
-        if (sendEmail) {
+        if (emailProps.isSendEmail()) {
             mailService.sendMail(patient.getUser().getEmail(), "Cita médica: Su cita fue cancelada", appointment);
         }
         return ResponseEntity.status(HttpStatus.OK).body(Map.of(MESSAGE, "Cita cancelada correctamente", APPOINTMENT, modelMapper.map(appointment, AppointmentResponse.class)));
