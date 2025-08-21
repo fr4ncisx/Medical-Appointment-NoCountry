@@ -11,6 +11,7 @@ public class SecurityEndpoints {
 
     public static String[] publicEndpoints() {
         return new String[] { "/api/v1/user/**",
+                "/actuator/health",
                 "/auth/**",
                 "/swagger-ui.html",
                 "/v3/api-docs/**",
